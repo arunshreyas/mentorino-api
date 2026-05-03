@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model applications {
+  id          String   @id @default(uuid())
+  user_email  String   @unique
+  mentor_type String?
+  responses   Json?
+  status      String   @default("pending")
+  created_at  DateTime @default(now())
+
+  @@map("applications")
+}
+
+model profiles {
+  id         String   @id
+  email      String   @unique
+  name       String
+  role       String   @default("user")
+  tasks      Json     @default("[]")
+  created_at DateTime @default(now())
+
+  bookings        bookings[]
+  task_activities task_activities[]
+
+  @@map("profiles")
+}
+
+model bookings {
+  id        String   @id @default(uuid())
+  user_id   String
+  user_name String?
+  date      String
+  time      String
+  status    String   @default("upcoming")
+  notes     String?
+
+  user profiles @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("bookings")
+}
+
+model task_activities {
+  id                         String   @id @default(uuid())
+  user_id                    String
+  user_name                  String?
+  status                     String   @default("pending")
+  admin_response             String?
+  pb_card_details            String?
+  pb_linkedin_url            String?
+  pb_resume_link             String?
+  pb_cover_letter_link       String?
+  pb_dress_code_notes        String?
+  pb_greeting_intro_notes    String?
+  net_attended_event         String?
+  net_people_met             String?
+  net_contact_info           String?
+  net_panel_summary          String?
+  pw_introduction            String?
+  pw_volunteer_hours         String?
+  cert_topic                 String?
+  roadmap_topic              String?
+  interview_recommendation   String?
+  created_at                 DateTime @default(now())
+
+  user profiles @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("task_activities")
+}
+
+model events {
+  id          String   @id @default(uuid())
+  title       String
+  date        String
+  time        String
+  location    String
+  description String
+  link        String?
+  attendees   Json     @default("[]")
+  created_at  DateTime @default(now())
+
+  @@map("events")
+}
