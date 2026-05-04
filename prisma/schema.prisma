@@ -33,7 +33,7 @@ model profiles {
   id         String   @id
   email      String   @unique
   name       String
-  password   String?
+  password   String
   role       Role     @default(USER)
   tasks      Json     @default("[]")
   created_at DateTime @default(now())
