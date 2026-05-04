@@ -1,4 +1,4 @@
-import { IsArray, IsBoolean, IsDate, IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsBoolean, IsDate, IsIn, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateProfileDto {
     @IsNotEmpty()
@@ -9,6 +9,7 @@ export class CreateProfileDto {
     name: string;
     @IsNotEmpty()
     @IsString()
+    @IsIn(["student", "mentor"])
     role: string;
     @IsNotEmpty()
     @IsArray()

@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ApplicationsModule } from './applications/applications.module';
@@ -9,7 +11,28 @@ import { EventsModule } from './events/events.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [ApplicationsModule, ProfilesModule, BookingsModule, TaskActivitiesModule, EventsModule, AuthModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000, // 60 seconds
+        limit: 10, // 10 requests per 60 seconds
+      },
+      {
+        ttl: 60000,
+        limit: 5, // Stricter limit for auth routes
+        name: 'auth',
+      },
+    ]),
+    ApplicationsModule,
+    ProfilesModule,
+    BookingsModule,
+    TaskActivitiesModule,
+    EventsModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

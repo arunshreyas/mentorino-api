@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateProfileDto } from './create-profile.dto';
-import { IsArray, IsDate, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsDate, IsIn, IsOptional, IsString } from 'class-validator';
 
 export class UpdateProfileDto extends PartialType(CreateProfileDto) {
     @IsOptional()
@@ -11,6 +11,7 @@ export class UpdateProfileDto extends PartialType(CreateProfileDto) {
     name?: string;
     @IsOptional()
     @IsString()
+    @IsIn(["student", "mentor"])
     role?: string;
     @IsOptional()
     @IsArray()

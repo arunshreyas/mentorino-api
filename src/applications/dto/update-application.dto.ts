@@ -1,17 +1,18 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateApplicationDto } from './create-application.dto';
-import { IsOptional, IsString } from 'class-validator';
+import { IsIn, IsOptional, IsString } from 'class-validator';
 
 export class UpdateApplicationDto extends PartialType(CreateApplicationDto) {
     @IsOptional()
     @IsString()
-    status: string;
+    @IsIn(["pending", "accepted", "rejected", "reviewed"])
+    status?: string;
     
     @IsOptional()
     @IsString()
-    responses: string;
+    responses?: string;
 
     @IsOptional()
     @IsString()
-    mentor_type: string;
+    mentor_type?: string;
 }

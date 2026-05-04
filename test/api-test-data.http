@@ -16,14 +16,21 @@ Content-Type: application/json
 
 ### List applications
 GET {{baseUrl}}/applications
+x-user-role: mentor
 
 ### Get application
 @applicationId = {{createApplication.response.body.id}}
 GET {{baseUrl}}/applications/{{applicationId}}
+x-user-role: mentor
+
+### Mentor dashboard applications
+GET {{baseUrl}}/applications/mentor-dashboard
+x-user-role: mentor
 
 ### Update application
 PATCH {{baseUrl}}/applications/{{applicationId}}
 Content-Type: application/json
+x-user-role: mentor
 
 {
   "mentor_type": "product-management",
@@ -31,8 +38,17 @@ Content-Type: application/json
   "status": "reviewed"
 }
 
+### Accept application
+PATCH {{baseUrl}}/applications/{{applicationId}}/accept
+x-user-role: mentor
+
+### Reject application
+PATCH {{baseUrl}}/applications/{{applicationId}}/reject
+x-user-role: mentor
+
 ### Delete application
 DELETE {{baseUrl}}/applications/{{applicationId}}
+x-user-role: mentor
 
 ### Create profile
 # @name createProfile

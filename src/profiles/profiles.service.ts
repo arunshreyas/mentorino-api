@@ -3,6 +3,7 @@ import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { PrismaService } from '../prisma.service';
 import { v4 as uuidv4 } from 'uuid';
+import { Role } from '../generated/prisma/client';
 
 @Injectable()
 export class ProfilesService {
@@ -18,7 +19,7 @@ export class ProfilesService {
         id: uuidv4(),
         email: createProfileDto.email,
         name: createProfileDto.name,
-        role: createProfileDto.role,
+        role: createProfileDto.role as Role,
         tasks: createProfileDto.tasks,
         created_at: createProfileDto.created_at,
       },
@@ -41,7 +42,10 @@ export class ProfilesService {
   update(id: string, updateProfileDto: UpdateProfileDto) {
       return this.prisma.profiles.update({
       where: { id },
-      data: updateProfileDto,
+      data: {
+        ...updateProfileDto,
+        role: updateProfileDto.role as Role,
+      },
     });
   }
 
