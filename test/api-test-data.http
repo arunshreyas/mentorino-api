@@ -1,0 +1,192 @@
+@baseUrl = http://localhost:3000
+
+### Root health check
+GET {{baseUrl}}/
+
+### Create application
+# @name createApplication
+POST {{baseUrl}}/applications
+Content-Type: application/json
+
+{
+  "user_email": "maya.patel.applicant@example.com",
+  "mentor_type": "career",
+  "responses": "{\"goals\":[\"prepare for product interviews\",\"build a stronger resume\"],\"availability\":\"weekday evenings\",\"experienceLevel\":\"college senior\"}"
+}
+
+### List applications
+GET {{baseUrl}}/applications
+
+### Get application
+@applicationId = {{createApplication.response.body.id}}
+GET {{baseUrl}}/applications/{{applicationId}}
+
+### Update application
+PATCH {{baseUrl}}/applications/{{applicationId}}
+Content-Type: application/json
+
+{
+  "mentor_type": "product-management",
+  "responses": "{\"goals\":[\"mock interviews\",\"portfolio review\"],\"availability\":\"tuesday and thursday evenings\",\"experienceLevel\":\"college senior\"}",
+  "status": "reviewed"
+}
+
+### Delete application
+DELETE {{baseUrl}}/applications/{{applicationId}}
+
+### Create profile
+# @name createProfile
+POST {{baseUrl}}/profiles
+Content-Type: application/json
+
+{
+  "email": "maya.patel@example.com",
+  "name": "Maya Patel",
+  "role": "student",
+  "tasks": ["personal-branding", "networking", "interview-prep"],
+  "created_at": "2026-05-04T09:00:00.000Z",
+  "updated_at": "2026-05-04T09:00:00.000Z",
+  "deleted_at": "2026-05-04T09:00:00.000Z",
+  "is_active": true,
+  "is_deleted": false,
+  "is_verified": true,
+  "is_blocked": false,
+  "is_suspended": false
+}
+
+### List profiles
+GET {{baseUrl}}/profiles
+
+### Get profile
+@profileId = {{createProfile.response.body.id}}
+GET {{baseUrl}}/profiles/{{profileId}}
+
+### Update profile
+PATCH {{baseUrl}}/profiles/{{profileId}}
+Content-Type: application/json
+
+{
+  "name": "Maya R. Patel",
+  "role": "mentee",
+  "tasks": ["personal-branding", "networking", "interview-prep", "certification"]
+}
+
+### Create booking
+# @name createBooking
+POST {{baseUrl}}/bookings
+Content-Type: application/json
+
+{
+  "user_id": "{{profileId}}",
+  "user_name": "Maya Patel",
+  "date": "2026-05-12",
+  "time": "17:30",
+  "status": "upcoming",
+  "notes": "Initial career planning call focused on internship search."
+}
+
+### List bookings
+GET {{baseUrl}}/bookings
+
+### Get booking
+@bookingId = {{createBooking.response.body.id}}
+GET {{baseUrl}}/bookings/{{bookingId}}
+
+### Update booking
+PATCH {{baseUrl}}/bookings/{{bookingId}}
+Content-Type: application/json
+
+{
+  "status": "completed",
+  "notes": "Completed session; follow up with resume revisions and target company list."
+}
+
+### Delete booking
+DELETE {{baseUrl}}/bookings/{{bookingId}}
+
+### Create event
+# @name createEvent
+POST {{baseUrl}}/events
+Content-Type: application/json
+
+{
+  "title": "Mentorino Product Careers Night",
+  "date": "2026-05-20",
+  "time": "18:00",
+  "location": "Online",
+  "description": "Panel discussion with product managers covering resumes, portfolio reviews, and interview loops.",
+  "link": "https://mentorino.example.com/events/product-careers-night",
+  "attendees": ["maya.patel@example.com", "alex.chen@example.com"]
+}
+
+### List events
+GET {{baseUrl}}/events
+
+### Get event
+@eventId = {{createEvent.response.body.id}}
+GET {{baseUrl}}/events/{{eventId}}
+
+### Update event
+PATCH {{baseUrl}}/events/{{eventId}}
+Content-Type: application/json
+
+{
+  "time": "18:30",
+  "location": "Online - Zoom",
+  "description": "Updated panel discussion with live Q&A and breakout mentorship rooms.",
+  "attendees": ["maya.patel@example.com", "alex.chen@example.com", "sofia.rivera@example.com"]
+}
+
+### Delete event
+DELETE {{baseUrl}}/events/{{eventId}}
+
+### Create task activity
+# @name createTaskActivity
+POST {{baseUrl}}/task-activities
+Content-Type: application/json
+
+{
+  "user_id": "{{profileId}}",
+  "user_name": "Maya Patel",
+  "status": "pending",
+  "admin_response": "Submitted for mentor review.",
+  "pb_card_details": "Maya Patel | Product-focused computer science student | maya.patel@example.com",
+  "pb_linkedin_url": "https://www.linkedin.com/in/mayapatel-test",
+  "pb_resume_link": "https://mentorino.example.com/files/maya-patel-resume.pdf",
+  "pb_cover_letter_link": "https://mentorino.example.com/files/maya-patel-cover-letter.pdf",
+  "pb_dress_code_notes": "Business casual for networking sessions.",
+  "pb_greeting_intro_notes": "Hi, I am Maya, a CS student exploring associate product manager roles.",
+  "net_attended_event": "Mentorino Product Careers Night",
+  "net_people_met": "Alex Chen, Sofia Rivera",
+  "net_contact_info": "alex.chen@example.com; sofia.rivera@example.com",
+  "net_panel_summary": "Panel emphasized user research, structured case practice, and concise portfolio storytelling.",
+  "pw_introduction": "I am interested in connecting with product mentors who work on education technology.",
+  "pw_volunteer_hours": "12",
+  "cert_topic": "Google Project Management Certificate",
+  "roadmap_topic": "Associate Product Manager application roadmap",
+  "interview_recommendation": "Practice one product sense case and one behavioral story each week."
+}
+
+### List task activities
+GET {{baseUrl}}/task-activities
+
+### Get task activity
+@taskActivityId = {{createTaskActivity.response.body.id}}
+GET {{baseUrl}}/task-activities/{{taskActivityId}}
+
+### Update task activity
+PATCH {{baseUrl}}/task-activities/{{taskActivityId}}
+Content-Type: application/json
+
+{
+  "status": "approved",
+  "admin_response": "Good progress. Tighten the product story and add measurable project outcomes.",
+  "interview_recommendation": "Add metrics to STAR stories and schedule two mock interviews."
+}
+
+### Delete task activity
+DELETE {{baseUrl}}/task-activities/{{taskActivityId}}
+
+### Delete profile
+# Run this after booking/task-activity checks because those records depend on the profile.
+DELETE {{baseUrl}}/profiles/{{profileId}}

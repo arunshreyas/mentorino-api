@@ -1,0 +1,104 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "applications": {
+    "create": {
+      "user_email": "maya.patel.applicant@example.com",
+      "mentor_type": "career",
+      "responses": "{\"goals\":[\"prepare for product interviews\",\"build a stronger resume\"],\"availability\":\"weekday evenings\",\"experienceLevel\":\"college senior\"}"
+    },
+    "update": {
+      "mentor_type": "product-management",
+      "responses": "{\"goals\":[\"mock interviews\",\"portfolio review\"],\"availability\":\"tuesday and thursday evenings\",\"experienceLevel\":\"college senior\"}",
+      "status": "reviewed"
+    }
+  },
+  "profiles": {
+    "create": {
+      "email": "maya.patel@example.com",
+      "name": "Maya Patel",
+      "role": "student",
+      "tasks": ["personal-branding", "networking", "interview-prep"],
+      "created_at": "2026-05-04T09:00:00.000Z",
+      "updated_at": "2026-05-04T09:00:00.000Z",
+      "deleted_at": "2026-05-04T09:00:00.000Z",
+      "is_active": true,
+      "is_deleted": false,
+      "is_verified": true,
+      "is_blocked": false,
+      "is_suspended": false
+    },
+    "update": {
+      "name": "Maya R. Patel",
+      "role": "mentee",
+      "tasks": [
+        "personal-branding",
+        "networking",
+        "interview-prep",
+        "certification"
+      ]
+    }
+  },
+  "bookings": {
+    "create": {
+      "user_id": "{{profileId}}",
+      "user_name": "Maya Patel",
+      "date": "2026-05-12",
+      "time": "17:30",
+      "status": "upcoming",
+      "notes": "Initial career planning call focused on internship search."
+    },
+    "update": {
+      "status": "completed",
+      "notes": "Completed session; follow up with resume revisions and target company list."
+    }
+  },
+  "events": {
+    "create": {
+      "title": "Mentorino Product Careers Night",
+      "date": "2026-05-20",
+      "time": "18:00",
+      "location": "Online",
+      "description": "Panel discussion with product managers covering resumes, portfolio reviews, and interview loops.",
+      "link": "https://mentorino.example.com/events/product-careers-night",
+      "attendees": ["maya.patel@example.com", "alex.chen@example.com"]
+    },
+    "update": {
+      "time": "18:30",
+      "location": "Online - Zoom",
+      "description": "Updated panel discussion with live Q&A and breakout mentorship rooms.",
+      "attendees": [
+        "maya.patel@example.com",
+        "alex.chen@example.com",
+        "sofia.rivera@example.com"
+      ]
+    }
+  },
+  "taskActivities": {
+    "create": {
+      "user_id": "{{profileId}}",
+      "user_name": "Maya Patel",
+      "status": "pending",
+      "admin_response": "Submitted for mentor review.",
+      "pb_card_details": "Maya Patel | Product-focused computer science student | maya.patel@example.com",
+      "pb_linkedin_url": "https://www.linkedin.com/in/mayapatel-test",
+      "pb_resume_link": "https://mentorino.example.com/files/maya-patel-resume.pdf",
+      "pb_cover_letter_link": "https://mentorino.example.com/files/maya-patel-cover-letter.pdf",
+      "pb_dress_code_notes": "Business casual for networking sessions.",
+      "pb_greeting_intro_notes": "Hi, I am Maya, a CS student exploring associate product manager roles.",
+      "net_attended_event": "Mentorino Product Careers Night",
+      "net_people_met": "Alex Chen, Sofia Rivera",
+      "net_contact_info": "alex.chen@example.com; sofia.rivera@example.com",
+      "net_panel_summary": "Panel emphasized user research, structured case practice, and concise portfolio storytelling.",
+      "pw_introduction": "I am interested in connecting with product mentors who work on education technology.",
+      "pw_volunteer_hours": "12",
+      "cert_topic": "Google Project Management Certificate",
+      "roadmap_topic": "Associate Product Manager application roadmap",
+      "interview_recommendation": "Practice one product sense case and one behavioral story each week."
+    },
+    "update": {
+      "status": "approved",
+      "admin_response": "Good progress. Tighten the product story and add measurable project outcomes.",
+      "interview_recommendation": "Add metrics to STAR stories and schedule two mock interviews."
+    }
+  }
+}
