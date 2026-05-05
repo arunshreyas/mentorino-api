@@ -18,6 +18,10 @@ export class RegisterDto {
   name: string;
 
   @IsString()
+  @MinLength(6)
+  password: string;
+
+  @IsString()
   @MinLength(2)
   mentorType?: string;
 }

@@ -19,6 +19,7 @@ export class ProfilesService {
         id: uuidv4(),
         email: createProfileDto.email,
         name: createProfileDto.name,
+        password: createProfileDto.password,
         role: createProfileDto.role as Role,
         tasks: createProfileDto.tasks,
         created_at: createProfileDto.created_at,
