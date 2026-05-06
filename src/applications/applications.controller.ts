@@ -8,18 +8,15 @@ import { RolesGuard } from '../auth/roles.guard';
 import { OwnerGuard } from '../common/guards/owner.guard';
 
 @Controller('applications')
-@UseGuards(JwtAuthGuard)
 export class ApplicationsController {
   constructor(private readonly applicationsService: ApplicationsService) {}
 
   @Post()
-  create(@Body() createApplicationDto: CreateApplicationDto, @Request() req) {
-    return this.applicationsService.create(createApplicationDto, req.user);
+  create(@Body() createApplicationDto: CreateApplicationDto) {
+    return this.applicationsService.create(createApplicationDto, null);
   }
 
   @Get()
-  @UseGuards(RolesGuard)
-  @Roles('MENTOR' as any, 'ADMIN' as any)
   findAll() {
     return this.applicationsService.findAll();
   }

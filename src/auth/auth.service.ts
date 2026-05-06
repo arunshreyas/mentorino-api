@@ -79,6 +79,8 @@ export class AuthService {
     if (registerDto.mentorType) {
       await this.prisma.applications.create({
         data: {
+          user_id: user.id,
+          user_name: registerDto.name,
           user_email: registerDto.email,
           mentor_type: registerDto.mentorType,
           status: 'pending',

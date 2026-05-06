@@ -18,11 +18,11 @@ import { AuthModule } from './auth/auth.module';
     ThrottlerModule.forRoot([
       {
         ttl: 60000, // 60 seconds
-        limit: 10, // 10 requests per 60 seconds
+        limit: 100, // 100 requests per 60 seconds
       },
       {
         ttl: 60000,
-        limit: 5, // Stricter limit for auth routes
+        limit: 50, // Increased limit for auth routes
         name: 'auth',
       },
     ]),

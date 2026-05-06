@@ -7,12 +7,27 @@ import { PrismaService } from '../prisma.service';
 export class ApplicationsService {
   constructor(private prisma: PrismaService) {}
 
-  create(createApplicationDto: CreateApplicationDto, user: any) {
+  create(createApplicationDto: CreateApplicationDto, user: any = null) {
+    const applicationData = {
+      user_id: user?.id || null,
+      user_name: user?.name || 'Anonymous User',
+      user_email: createApplicationDto.user_email,
+      user_phone: createApplicationDto.user_phone,
+      mentor_type: createApplicationDto.mentor_type,
+      meeting_preference: createApplicationDto.meeting_preference,
+      frequency: createApplicationDto.frequency,
+      goals: createApplicationDto.goals,
+      seriousness: createApplicationDto.seriousness,
+      attribution: createApplicationDto.attribution,
+      source: createApplicationDto.source,
+      tags: createApplicationDto.tags,
+      notes: createApplicationDto.notes,
+      status: 'pending',
+      created_at: new Date(),
+    };
+
     return this.prisma.applications.create({
-      data: {
-        ...createApplicationDto,
-        user_email: user.email,
-      },
+      data: applicationData,
     });
   }
 

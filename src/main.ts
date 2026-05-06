@@ -65,7 +65,7 @@ async function bootstrap() {
 
   // CORS
   app.enableCors({
-    origin: configService.get<string>('CORS_ORIGIN') || '*',
+    origin: ['http://localhost:3001'],
     credentials: true,
   });
 
@@ -77,7 +77,7 @@ async function bootstrap() {
     next();
   });
 
-  const port = process.env.PORT ?? 3000;
+  const port = process.env.PORT ?? 3001;
   await app.listen(port);
   
   logger.log(`🚀 Mentorino API Server running on port ${port}`);

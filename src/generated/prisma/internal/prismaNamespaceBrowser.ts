@@ -76,11 +76,24 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const ApplicationsScalarFieldEnum = {
   id: 'id',
+  user_id: 'user_id',
+  user_name: 'user_name',
   user_email: 'user_email',
+  user_phone: 'user_phone',
   mentor_type: 'mentor_type',
-  responses: 'responses',
+  meeting_preference: 'meeting_preference',
+  frequency: 'frequency',
+  goals: 'goals',
+  seriousness: 'seriousness',
+  attribution: 'attribution',
+  source: 'source',
+  tags: 'tags',
+  notes: 'notes',
   status: 'status',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  ai_score: 'ai_score',
+  pillar: 'pillar',
+  experience: 'experience'
 } as const
 
 export type ApplicationsScalarFieldEnum = (typeof ApplicationsScalarFieldEnum)[keyof typeof ApplicationsScalarFieldEnum]

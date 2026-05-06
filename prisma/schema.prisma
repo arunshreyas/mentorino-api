@@ -19,12 +19,27 @@ enum Role {
 }
 
 model applications {
-  id          String   @id @default(uuid())
-  user_email  String   @unique
-  mentor_type String?
-  responses   Json?
-  status      String   @default("pending")
-  created_at  DateTime @default(now())
+  id                   String   @id @default(uuid())
+  user_id              String?
+  user_name            String
+  user_email           String
+  user_phone           String?
+  mentor_type          String
+  meeting_preference   String?  // 'Virtual', 'In-Person', 'Hybrid'
+  frequency            String?  // 'Weekly', 'Bi-weekly', 'Monthly'
+  goals                String?
+  seriousness           Int?     // 1-5 scale
+  attribution          String?
+  source               String?
+  tags                 Json?    // ["tag1", "tag2"]
+  notes                Json?    // ["note1", "note2"]
+  status               String   @default("pending") // 'pending', 'approved', 'rejected', 'deleted'
+  created_at           DateTime @default(now())
+  ai_score             Float?
+  pillar               String?
+  experience           String?
+
+  user profiles? @relation(fields: [user_id], references: [id], onDelete: SetNull)
 
   @@map("applications")
 }
@@ -40,6 +55,7 @@ model profiles {
 
   bookings        bookings[]
   task_activities task_activities[]
+  applications    applications[]
 
   @@map("profiles")
 }
@@ -51,7 +67,7 @@ model bookings {
   date      String
   time      String
   status    String   @default("upcoming")
-  notes     String?
+  notes     String? 
 
   user profiles @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
