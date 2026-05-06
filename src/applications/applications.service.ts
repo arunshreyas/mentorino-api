@@ -9,8 +9,7 @@ export class ApplicationsService {
 
   create(createApplicationDto: CreateApplicationDto, user: any = null) {
     const applicationData = {
-      user_id: user?.id || null,
-      user_name: user?.name || 'Anonymous User',
+      user_name: user?.name || createApplicationDto.user_name || 'Anonymous User',
       user_email: createApplicationDto.user_email,
       user_phone: createApplicationDto.user_phone,
       mentor_type: createApplicationDto.mentor_type,
@@ -88,6 +87,20 @@ export class ApplicationsService {
   remove(id: string) {
     return this.prisma.applications.delete({
       where: { id },
+    });
+  }
+
+  findByStatus(status: string) {
+    return this.prisma.applications.findMany({
+      where: { status },
+      orderBy: { created_at: 'desc' },
+    });
+  }
+
+  updateStatus(id: string, status: string) {
+    return this.prisma.applications.update({
+      where: { id },
+      data: { status },
     });
   }
 }

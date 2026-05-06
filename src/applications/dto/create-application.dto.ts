@@ -61,6 +61,7 @@ export class CreateApplicationDto {
     @IsString()
     experience?: string;
     
+    // These fields are accepted but ignored - set by backend
     @IsOptional()
     @IsString()
     user_id?: string;

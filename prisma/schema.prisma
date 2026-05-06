@@ -20,7 +20,6 @@ enum Role {
 
 model applications {
   id                   String   @id @default(uuid())
-  user_id              String?
   user_name            String
   user_email           String
   user_phone           String?
@@ -39,8 +38,6 @@ model applications {
   pillar               String?
   experience           String?
 
-  user profiles? @relation(fields: [user_id], references: [id], onDelete: SetNull)
-
   @@map("applications")
 }
 
@@ -55,7 +52,6 @@ model profiles {
 
   bookings        bookings[]
   task_activities task_activities[]
-  applications    applications[]
 
   @@map("profiles")
 }

@@ -51,6 +51,24 @@ export class AuthService {
       throw new BadRequestException('Password must be at least 6 characters long');
     }
 
+    // Verify application ID exists and is approved
+    const application = await this.prisma.applications.findUnique({
+      where: { id: registerDto.applicationId },
+    });
+
+    if (!application) {
+      throw new BadRequestException('Invalid application ID');
+    }
+
+    if (application.status !== 'approved') {
+      throw new BadRequestException('Application must be approved by admin before signup');
+    }
+
+    // Check if application email matches registration email
+    if (application.user_email !== registerDto.email) {
+      throw new BadRequestException('Registration email must match application email');
+    }
+
     // Check if user already exists
     const existingUser = await this.prisma.profiles.findUnique({
       where: { email: registerDto.email },
@@ -75,18 +93,11 @@ export class AuthService {
       },
     });
 
-    // If mentor type provided, create application
-    if (registerDto.mentorType) {
-      await this.prisma.applications.create({
-        data: {
-          user_id: user.id,
-          user_name: registerDto.name,
-          user_email: registerDto.email,
-          mentor_type: registerDto.mentorType,
-          status: 'pending',
-        },
-      });
-    }
+    // Update application to link it to the user and mark as used
+    await this.prisma.applications.update({
+      where: { id: registerDto.applicationId },
+      data: { status: 'converted', notes: [...(application.notes as string[] || []), `Converted to user account: ${user.id}`] },
+    });
 
     const { password, ...result } = user;
     const payload = { email: result.email, sub: result.id, role: result.role };
