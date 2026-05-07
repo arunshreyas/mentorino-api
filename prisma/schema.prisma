@@ -52,6 +52,8 @@ model profiles {
 
   bookings        bookings[]
   task_activities task_activities[]
+  mentorSessions  Session[] @relation("MentorSessions")
+  studentSessions Session[] @relation("StudentSessions")
 
   @@map("profiles")
 }
@@ -110,4 +112,31 @@ model events {
   created_at  DateTime @default(now())
 
   @@map("events")
+}
+
+enum SessionStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+model Session {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  mentorId    String
+  studentId   String
+  status      SessionStatus @default(SCHEDULED)
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  mentor      profiles       @relation("MentorSessions", fields: [mentorId], references: [id])
+  student     profiles       @relation("StudentSessions", fields: [studentId], references: [id])
+
+  @@index([mentorId, studentId])
+  @@index([status])
 }
