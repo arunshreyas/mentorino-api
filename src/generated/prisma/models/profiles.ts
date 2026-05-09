@@ -196,6 +196,8 @@ export type profilesWhereInput = {
   created_at?: Prisma.DateTimeFilter<"profiles"> | Date | string
   bookings?: Prisma.BookingsListRelationFilter
   task_activities?: Prisma.Task_activitiesListRelationFilter
+  mentorSessions?: Prisma.SessionListRelationFilter
+  studentSessions?: Prisma.SessionListRelationFilter
 }
 
 export type profilesOrderByWithRelationInput = {
@@ -208,6 +210,8 @@ export type profilesOrderByWithRelationInput = {
   created_at?: Prisma.SortOrder
   bookings?: Prisma.bookingsOrderByRelationAggregateInput
   task_activities?: Prisma.task_activitiesOrderByRelationAggregateInput
+  mentorSessions?: Prisma.SessionOrderByRelationAggregateInput
+  studentSessions?: Prisma.SessionOrderByRelationAggregateInput
 }
 
 export type profilesWhereUniqueInput = Prisma.AtLeast<{
@@ -223,6 +227,8 @@ export type profilesWhereUniqueInput = Prisma.AtLeast<{
   created_at?: Prisma.DateTimeFilter<"profiles"> | Date | string
   bookings?: Prisma.BookingsListRelationFilter
   task_activities?: Prisma.Task_activitiesListRelationFilter
+  mentorSessions?: Prisma.SessionListRelationFilter
+  studentSessions?: Prisma.SessionListRelationFilter
 }, "id" | "email">
 
 export type profilesOrderByWithAggregationInput = {
@@ -261,6 +267,8 @@ export type profilesCreateInput = {
   created_at?: Date | string
   bookings?: Prisma.bookingsCreateNestedManyWithoutUserInput
   task_activities?: Prisma.task_activitiesCreateNestedManyWithoutUserInput
+  mentorSessions?: Prisma.SessionCreateNestedManyWithoutMentorInput
+  studentSessions?: Prisma.SessionCreateNestedManyWithoutStudentInput
 }
 
 export type profilesUncheckedCreateInput = {
@@ -273,6 +281,8 @@ export type profilesUncheckedCreateInput = {
   created_at?: Date | string
   bookings?: Prisma.bookingsUncheckedCreateNestedManyWithoutUserInput
   task_activities?: Prisma.task_activitiesUncheckedCreateNestedManyWithoutUserInput
+  mentorSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutMentorInput
+  studentSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type profilesUpdateInput = {
@@ -285,6 +295,8 @@ export type profilesUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.bookingsUpdateManyWithoutUserNestedInput
   task_activities?: Prisma.task_activitiesUpdateManyWithoutUserNestedInput
+  mentorSessions?: Prisma.SessionUpdateManyWithoutMentorNestedInput
+  studentSessions?: Prisma.SessionUpdateManyWithoutStudentNestedInput
 }
 
 export type profilesUncheckedUpdateInput = {
@@ -297,6 +309,8 @@ export type profilesUncheckedUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.bookingsUncheckedUpdateManyWithoutUserNestedInput
   task_activities?: Prisma.task_activitiesUncheckedUpdateManyWithoutUserNestedInput
+  mentorSessions?: Prisma.SessionUncheckedUpdateManyWithoutMentorNestedInput
+  studentSessions?: Prisma.SessionUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type profilesCreateManyInput = {
@@ -394,6 +408,34 @@ export type profilesUpdateOneRequiredWithoutTask_activitiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.profilesUpdateToOneWithWhereWithoutTask_activitiesInput, Prisma.profilesUpdateWithoutTask_activitiesInput>, Prisma.profilesUncheckedUpdateWithoutTask_activitiesInput>
 }
 
+export type profilesCreateNestedOneWithoutMentorSessionsInput = {
+  create?: Prisma.XOR<Prisma.profilesCreateWithoutMentorSessionsInput, Prisma.profilesUncheckedCreateWithoutMentorSessionsInput>
+  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutMentorSessionsInput
+  connect?: Prisma.profilesWhereUniqueInput
+}
+
+export type profilesCreateNestedOneWithoutStudentSessionsInput = {
+  create?: Prisma.XOR<Prisma.profilesCreateWithoutStudentSessionsInput, Prisma.profilesUncheckedCreateWithoutStudentSessionsInput>
+  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutStudentSessionsInput
+  connect?: Prisma.profilesWhereUniqueInput
+}
+
+export type profilesUpdateOneRequiredWithoutMentorSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.profilesCreateWithoutMentorSessionsInput, Prisma.profilesUncheckedCreateWithoutMentorSessionsInput>
+  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutMentorSessionsInput
+  upsert?: Prisma.profilesUpsertWithoutMentorSessionsInput
+  connect?: Prisma.profilesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.profilesUpdateToOneWithWhereWithoutMentorSessionsInput, Prisma.profilesUpdateWithoutMentorSessionsInput>, Prisma.profilesUncheckedUpdateWithoutMentorSessionsInput>
+}
+
+export type profilesUpdateOneRequiredWithoutStudentSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.profilesCreateWithoutStudentSessionsInput, Prisma.profilesUncheckedCreateWithoutStudentSessionsInput>
+  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutStudentSessionsInput
+  upsert?: Prisma.profilesUpsertWithoutStudentSessionsInput
+  connect?: Prisma.profilesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.profilesUpdateToOneWithWhereWithoutStudentSessionsInput, Prisma.profilesUpdateWithoutStudentSessionsInput>, Prisma.profilesUncheckedUpdateWithoutStudentSessionsInput>
+}
+
 export type profilesCreateWithoutBookingsInput = {
   id: string
   email: string
@@ -403,6 +445,8 @@ export type profilesCreateWithoutBookingsInput = {
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
   task_activities?: Prisma.task_activitiesCreateNestedManyWithoutUserInput
+  mentorSessions?: Prisma.SessionCreateNestedManyWithoutMentorInput
+  studentSessions?: Prisma.SessionCreateNestedManyWithoutStudentInput
 }
 
 export type profilesUncheckedCreateWithoutBookingsInput = {
@@ -414,6 +458,8 @@ export type profilesUncheckedCreateWithoutBookingsInput = {
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
   task_activities?: Prisma.task_activitiesUncheckedCreateNestedManyWithoutUserInput
+  mentorSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutMentorInput
+  studentSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type profilesCreateOrConnectWithoutBookingsInput = {
@@ -441,6 +487,8 @@ export type profilesUpdateWithoutBookingsInput = {
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   task_activities?: Prisma.task_activitiesUpdateManyWithoutUserNestedInput
+  mentorSessions?: Prisma.SessionUpdateManyWithoutMentorNestedInput
+  studentSessions?: Prisma.SessionUpdateManyWithoutStudentNestedInput
 }
 
 export type profilesUncheckedUpdateWithoutBookingsInput = {
@@ -452,6 +500,8 @@ export type profilesUncheckedUpdateWithoutBookingsInput = {
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   task_activities?: Prisma.task_activitiesUncheckedUpdateManyWithoutUserNestedInput
+  mentorSessions?: Prisma.SessionUncheckedUpdateManyWithoutMentorNestedInput
+  studentSessions?: Prisma.SessionUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type profilesCreateWithoutTask_activitiesInput = {
@@ -463,6 +513,8 @@ export type profilesCreateWithoutTask_activitiesInput = {
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
   bookings?: Prisma.bookingsCreateNestedManyWithoutUserInput
+  mentorSessions?: Prisma.SessionCreateNestedManyWithoutMentorInput
+  studentSessions?: Prisma.SessionCreateNestedManyWithoutStudentInput
 }
 
 export type profilesUncheckedCreateWithoutTask_activitiesInput = {
@@ -474,6 +526,8 @@ export type profilesUncheckedCreateWithoutTask_activitiesInput = {
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
   bookings?: Prisma.bookingsUncheckedCreateNestedManyWithoutUserInput
+  mentorSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutMentorInput
+  studentSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type profilesCreateOrConnectWithoutTask_activitiesInput = {
@@ -501,6 +555,8 @@ export type profilesUpdateWithoutTask_activitiesInput = {
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.bookingsUpdateManyWithoutUserNestedInput
+  mentorSessions?: Prisma.SessionUpdateManyWithoutMentorNestedInput
+  studentSessions?: Prisma.SessionUpdateManyWithoutStudentNestedInput
 }
 
 export type profilesUncheckedUpdateWithoutTask_activitiesInput = {
@@ -512,6 +568,144 @@ export type profilesUncheckedUpdateWithoutTask_activitiesInput = {
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.bookingsUncheckedUpdateManyWithoutUserNestedInput
+  mentorSessions?: Prisma.SessionUncheckedUpdateManyWithoutMentorNestedInput
+  studentSessions?: Prisma.SessionUncheckedUpdateManyWithoutStudentNestedInput
+}
+
+export type profilesCreateWithoutMentorSessionsInput = {
+  id: string
+  email: string
+  name: string
+  password: string
+  role?: $Enums.Role
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  bookings?: Prisma.bookingsCreateNestedManyWithoutUserInput
+  task_activities?: Prisma.task_activitiesCreateNestedManyWithoutUserInput
+  studentSessions?: Prisma.SessionCreateNestedManyWithoutStudentInput
+}
+
+export type profilesUncheckedCreateWithoutMentorSessionsInput = {
+  id: string
+  email: string
+  name: string
+  password: string
+  role?: $Enums.Role
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  bookings?: Prisma.bookingsUncheckedCreateNestedManyWithoutUserInput
+  task_activities?: Prisma.task_activitiesUncheckedCreateNestedManyWithoutUserInput
+  studentSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutStudentInput
+}
+
+export type profilesCreateOrConnectWithoutMentorSessionsInput = {
+  where: Prisma.profilesWhereUniqueInput
+  create: Prisma.XOR<Prisma.profilesCreateWithoutMentorSessionsInput, Prisma.profilesUncheckedCreateWithoutMentorSessionsInput>
+}
+
+export type profilesCreateWithoutStudentSessionsInput = {
+  id: string
+  email: string
+  name: string
+  password: string
+  role?: $Enums.Role
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  bookings?: Prisma.bookingsCreateNestedManyWithoutUserInput
+  task_activities?: Prisma.task_activitiesCreateNestedManyWithoutUserInput
+  mentorSessions?: Prisma.SessionCreateNestedManyWithoutMentorInput
+}
+
+export type profilesUncheckedCreateWithoutStudentSessionsInput = {
+  id: string
+  email: string
+  name: string
+  password: string
+  role?: $Enums.Role
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  bookings?: Prisma.bookingsUncheckedCreateNestedManyWithoutUserInput
+  task_activities?: Prisma.task_activitiesUncheckedCreateNestedManyWithoutUserInput
+  mentorSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutMentorInput
+}
+
+export type profilesCreateOrConnectWithoutStudentSessionsInput = {
+  where: Prisma.profilesWhereUniqueInput
+  create: Prisma.XOR<Prisma.profilesCreateWithoutStudentSessionsInput, Prisma.profilesUncheckedCreateWithoutStudentSessionsInput>
+}
+
+export type profilesUpsertWithoutMentorSessionsInput = {
+  update: Prisma.XOR<Prisma.profilesUpdateWithoutMentorSessionsInput, Prisma.profilesUncheckedUpdateWithoutMentorSessionsInput>
+  create: Prisma.XOR<Prisma.profilesCreateWithoutMentorSessionsInput, Prisma.profilesUncheckedCreateWithoutMentorSessionsInput>
+  where?: Prisma.profilesWhereInput
+}
+
+export type profilesUpdateToOneWithWhereWithoutMentorSessionsInput = {
+  where?: Prisma.profilesWhereInput
+  data: Prisma.XOR<Prisma.profilesUpdateWithoutMentorSessionsInput, Prisma.profilesUncheckedUpdateWithoutMentorSessionsInput>
+}
+
+export type profilesUpdateWithoutMentorSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bookings?: Prisma.bookingsUpdateManyWithoutUserNestedInput
+  task_activities?: Prisma.task_activitiesUpdateManyWithoutUserNestedInput
+  studentSessions?: Prisma.SessionUpdateManyWithoutStudentNestedInput
+}
+
+export type profilesUncheckedUpdateWithoutMentorSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bookings?: Prisma.bookingsUncheckedUpdateManyWithoutUserNestedInput
+  task_activities?: Prisma.task_activitiesUncheckedUpdateManyWithoutUserNestedInput
+  studentSessions?: Prisma.SessionUncheckedUpdateManyWithoutStudentNestedInput
+}
+
+export type profilesUpsertWithoutStudentSessionsInput = {
+  update: Prisma.XOR<Prisma.profilesUpdateWithoutStudentSessionsInput, Prisma.profilesUncheckedUpdateWithoutStudentSessionsInput>
+  create: Prisma.XOR<Prisma.profilesCreateWithoutStudentSessionsInput, Prisma.profilesUncheckedCreateWithoutStudentSessionsInput>
+  where?: Prisma.profilesWhereInput
+}
+
+export type profilesUpdateToOneWithWhereWithoutStudentSessionsInput = {
+  where?: Prisma.profilesWhereInput
+  data: Prisma.XOR<Prisma.profilesUpdateWithoutStudentSessionsInput, Prisma.profilesUncheckedUpdateWithoutStudentSessionsInput>
+}
+
+export type profilesUpdateWithoutStudentSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bookings?: Prisma.bookingsUpdateManyWithoutUserNestedInput
+  task_activities?: Prisma.task_activitiesUpdateManyWithoutUserNestedInput
+  mentorSessions?: Prisma.SessionUpdateManyWithoutMentorNestedInput
+}
+
+export type profilesUncheckedUpdateWithoutStudentSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bookings?: Prisma.bookingsUncheckedUpdateManyWithoutUserNestedInput
+  task_activities?: Prisma.task_activitiesUncheckedUpdateManyWithoutUserNestedInput
+  mentorSessions?: Prisma.SessionUncheckedUpdateManyWithoutMentorNestedInput
 }
 
 
@@ -522,11 +716,15 @@ export type profilesUncheckedUpdateWithoutTask_activitiesInput = {
 export type ProfilesCountOutputType = {
   bookings: number
   task_activities: number
+  mentorSessions: number
+  studentSessions: number
 }
 
 export type ProfilesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookings?: boolean | ProfilesCountOutputTypeCountBookingsArgs
   task_activities?: boolean | ProfilesCountOutputTypeCountTask_activitiesArgs
+  mentorSessions?: boolean | ProfilesCountOutputTypeCountMentorSessionsArgs
+  studentSessions?: boolean | ProfilesCountOutputTypeCountStudentSessionsArgs
 }
 
 /**
@@ -553,6 +751,20 @@ export type ProfilesCountOutputTypeCountTask_activitiesArgs<ExtArgs extends runt
   where?: Prisma.task_activitiesWhereInput
 }
 
+/**
+ * ProfilesCountOutputType without action
+ */
+export type ProfilesCountOutputTypeCountMentorSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SessionWhereInput
+}
+
+/**
+ * ProfilesCountOutputType without action
+ */
+export type ProfilesCountOutputTypeCountStudentSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SessionWhereInput
+}
+
 
 export type profilesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -564,6 +776,8 @@ export type profilesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   created_at?: boolean
   bookings?: boolean | Prisma.profiles$bookingsArgs<ExtArgs>
   task_activities?: boolean | Prisma.profiles$task_activitiesArgs<ExtArgs>
+  mentorSessions?: boolean | Prisma.profiles$mentorSessionsArgs<ExtArgs>
+  studentSessions?: boolean | Prisma.profiles$studentSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.ProfilesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profiles"]>
 
@@ -601,6 +815,8 @@ export type profilesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type profilesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookings?: boolean | Prisma.profiles$bookingsArgs<ExtArgs>
   task_activities?: boolean | Prisma.profiles$task_activitiesArgs<ExtArgs>
+  mentorSessions?: boolean | Prisma.profiles$mentorSessionsArgs<ExtArgs>
+  studentSessions?: boolean | Prisma.profiles$studentSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.ProfilesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type profilesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -611,6 +827,8 @@ export type $profilesPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     bookings: Prisma.$bookingsPayload<ExtArgs>[]
     task_activities: Prisma.$task_activitiesPayload<ExtArgs>[]
+    mentorSessions: Prisma.$SessionPayload<ExtArgs>[]
+    studentSessions: Prisma.$SessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1016,6 +1234,8 @@ export interface Prisma__profilesClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   bookings<T extends Prisma.profiles$bookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$bookingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   task_activities<T extends Prisma.profiles$task_activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$task_activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$task_activitiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mentorSessions<T extends Prisma.profiles$mentorSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$mentorSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  studentSessions<T extends Prisma.profiles$studentSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$studentSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1490,6 +1710,54 @@ export type profiles$task_activitiesArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.Task_activitiesScalarFieldEnum | Prisma.Task_activitiesScalarFieldEnum[]
+}
+
+/**
+ * profiles.mentorSessions
+ */
+export type profiles$mentorSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Session
+   */
+  select?: Prisma.SessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Session
+   */
+  omit?: Prisma.SessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SessionInclude<ExtArgs> | null
+  where?: Prisma.SessionWhereInput
+  orderBy?: Prisma.SessionOrderByWithRelationInput | Prisma.SessionOrderByWithRelationInput[]
+  cursor?: Prisma.SessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
+}
+
+/**
+ * profiles.studentSessions
+ */
+export type profiles$studentSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Session
+   */
+  select?: Prisma.SessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Session
+   */
+  omit?: Prisma.SessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SessionInclude<ExtArgs> | null
+  where?: Prisma.SessionWhereInput
+  orderBy?: Prisma.SessionOrderByWithRelationInput | Prisma.SessionOrderByWithRelationInput[]
+  cursor?: Prisma.SessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
 }
 
 /**

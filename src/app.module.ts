@@ -8,6 +8,7 @@ import { ProfilesModule } from './profiles/profiles.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { TaskActivitiesModule } from './task-activities/task-activities.module';
 import { EventsModule } from './events/events.module';
+import { SessionsModule } from './sessions/sessions.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -31,6 +32,7 @@ import { AuthModule } from './auth/auth.module';
     BookingsModule,
     TaskActivitiesModule,
     EventsModule,
+    SessionsModule,
     AuthModule,
   ],
   controllers: [AppController],

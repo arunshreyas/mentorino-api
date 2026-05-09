@@ -42,3 +42,8 @@ export type task_activities = Prisma.task_activitiesModel
  * 
  */
 export type events = Prisma.eventsModel
+/**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel

@@ -21,6 +21,12 @@ export class BookingsService {
     return this.prisma.bookings.findMany();
   }
 
+  findByUserId(userId: string) {
+    return this.prisma.bookings.findMany({
+      where: { user_id: userId },
+    });
+  }
+
   findOne(id: string) {
     return this.prisma.bookings.findUnique({
       where: { id },
