@@ -1,4 +1,4 @@
-import { IsArray, IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateEventDto {
     @IsNotEmpty()
@@ -16,9 +16,9 @@ export class CreateEventDto {
     @IsNotEmpty()
     @IsString()
     description: string;
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
-    link: string;
+    link?: string;
     @IsNotEmpty()
     @IsArray()
     @IsString({ each: true })

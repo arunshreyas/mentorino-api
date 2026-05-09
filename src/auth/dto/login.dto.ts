@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MinLength, IsNotEmpty } from 'class-validator';
+import { IsEmail, IsString, MinLength, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class LoginDto {
   @IsEmail()
@@ -25,6 +25,7 @@ export class RegisterDto {
   @IsNotEmpty()
   applicationId: string;
 
+  @IsOptional()
   @IsString()
   @MinLength(2)
   mentorType?: string;
