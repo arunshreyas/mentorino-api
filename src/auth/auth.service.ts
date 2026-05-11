@@ -1,9 +1,15 @@
-import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  BadRequestException,
+  ConflictException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma.service';
 import { LoginDto, RegisterDto } from './dto/login.dto';
 import { Role } from '../generated/prisma/client';
 import * as bcrypt from 'bcrypt';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +20,14 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.prisma.profiles.findUnique({
-      where: { email },
+      where: { email: email.toLowerCase().trim() },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        password: true,
+        role: true,
+      },
     });
 
     if (user && user.password) {
@@ -65,17 +78,20 @@ export class AuthService {
     }
 
     // Check if application email matches registration email
-    if (application.user_email !== registerDto.email) {
+    const normalizedEmail = registerDto.email.toLowerCase().trim();
+
+    if (application.user_email.toLowerCase().trim() !== normalizedEmail) {
       throw new BadRequestException('Registration email must match application email');
     }
 
     // Check if user already exists
     const existingUser = await this.prisma.profiles.findUnique({
-      where: { email: registerDto.email },
+      where: { email: normalizedEmail },
+      select: { id: true },
     });
 
     if (existingUser) {
-      throw new UnauthorizedException('User already exists');
+      throw new ConflictException('User already exists');
     }
 
     // Hash password with bcrypt
@@ -85,26 +101,33 @@ export class AuthService {
     // Create user with proper role
     const user = await this.prisma.profiles.create({
       data: {
-        id: crypto.randomUUID(),
-        email: registerDto.email,
-        name: registerDto.name,
+        id: randomUUID(),
+        email: normalizedEmail,
+        name: registerDto.name.trim(),
         password: hashedPassword,
         role: Role.USER,
       },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+      },
     });
 
-    // Update application to link it to the user and mark as used
+    const notes = Array.isArray(application.notes) ? application.notes : [];
     await this.prisma.applications.update({
       where: { id: registerDto.applicationId },
-      data: { status: 'converted', notes: [...(application.notes as string[] || []), `Converted to user account: ${user.id}`] },
+      data: {
+        notes: [...notes, `Registered user account: ${user.id}`],
+      },
     });
 
-    const { password, ...result } = user;
-    const payload = { email: result.email, sub: result.id, role: result.role, name: result.name };
+    const payload = { email: user.email, sub: user.id, role: user.role, name: user.name };
     
     return {
       access_token: this.jwtService.sign(payload),
-      user: result,
+      user,
     };
   }
 

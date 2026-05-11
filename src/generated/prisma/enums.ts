@@ -18,6 +18,15 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const AvailabilityStatus = {
+  AVAILABLE: 'AVAILABLE',
+  BOOKED: 'BOOKED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type AvailabilityStatus = (typeof AvailabilityStatus)[keyof typeof AvailabilityStatus]
+
+
 export const SessionStatus = {
   SCHEDULED: 'SCHEDULED',
   COMPLETED: 'COMPLETED',

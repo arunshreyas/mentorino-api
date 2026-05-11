@@ -1,8 +1,8 @@
-import { IsArray, IsBoolean, IsDate, IsIn, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsArray, IsEmail, IsIn, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator";
 
 export class CreateProfileDto {
     @IsNotEmpty()
-    @IsString()
+    @IsEmail()
     email: string;
     @IsNotEmpty()
     @IsString()
@@ -13,34 +13,10 @@ export class CreateProfileDto {
     password: string;
     @IsNotEmpty()
     @IsString()
-    @IsIn(["student", "mentor"])
+    @IsIn(["USER", "MENTOR", "ADMIN", "user", "mentor", "admin"])
     role: string;
-    @IsNotEmpty()
+    @IsOptional()
     @IsArray()
     @IsString({ each: true })
     tasks: string[];
-    @IsNotEmpty()
-    @IsDate()
-    created_at: Date;
-    @IsNotEmpty()
-    @IsDate()
-    updated_at: Date;
-    @IsNotEmpty()
-    @IsDate()
-    deleted_at: Date;
-    @IsNotEmpty()
-    @IsBoolean()
-    is_active: boolean;
-    @IsNotEmpty()
-    @IsBoolean()
-    is_deleted: boolean;
-    @IsNotEmpty()
-    @IsBoolean()
-    is_verified: boolean;
-    @IsNotEmpty()
-    @IsBoolean()
-    is_blocked: boolean;
-    @IsNotEmpty()
-    @IsBoolean()
-    is_suspended: boolean;
 }

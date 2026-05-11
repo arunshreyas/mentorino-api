@@ -18,6 +18,12 @@ enum Role {
   ADMIN
 }
 
+enum AvailabilityStatus {
+  AVAILABLE
+  BOOKED
+  CANCELLED
+}
+
 model applications {
   id                   String   @id @default(uuid())
   user_name            String
@@ -49,11 +55,17 @@ model profiles {
   role       Role     @default(USER)
   tasks      Json     @default("[]")
   created_at DateTime @default(now())
+  expertise  Json     @default("[]")
+  bio        String?
+  profile_image_url String?
+  pricing_cents Int?
+  timezone   String?
 
   bookings        bookings[]
   task_activities task_activities[]
   mentorSessions  Session[] @relation("MentorSessions")
   studentSessions Session[] @relation("StudentSessions")
+  availabilitySlots MentorAvailability[]
 
   @@map("profiles")
 }
@@ -131,12 +143,32 @@ model Session {
   studentId   String
   status      SessionStatus @default(SCHEDULED)
   notes       String?
+  availabilitySlotId String? @unique
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
 
   mentor      profiles       @relation("MentorSessions", fields: [mentorId], references: [id])
   student     profiles       @relation("StudentSessions", fields: [studentId], references: [id])
+  availabilitySlot MentorAvailability? @relation(fields: [availabilitySlotId], references: [id])
 
   @@index([mentorId, studentId])
+  @@index([mentorId, startTime])
+  @@index([studentId, startTime])
   @@index([status])
+}
+
+model MentorAvailability {
+  id        String             @id @default(uuid())
+  mentorId  String
+  startTime DateTime
+  endTime   DateTime
+  status    AvailabilityStatus @default(AVAILABLE)
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+
+  mentor    profiles           @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  session   Session?
+
+  @@unique([mentorId, startTime])
+  @@index([mentorId, status, startTime])
 }

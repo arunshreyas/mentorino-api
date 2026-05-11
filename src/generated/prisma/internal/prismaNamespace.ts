@@ -389,7 +389,8 @@ export const ModelName = {
   bookings: 'bookings',
   task_activities: 'task_activities',
   events: 'events',
-  Session: 'Session'
+  Session: 'Session',
+  MentorAvailability: 'MentorAvailability'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "applications" | "profiles" | "bookings" | "task_activities" | "events" | "session"
+    modelProps: "applications" | "profiles" | "bookings" | "task_activities" | "events" | "session" | "mentorAvailability"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +854,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MentorAvailability: {
+      payload: Prisma.$MentorAvailabilityPayload<ExtArgs>
+      fields: Prisma.MentorAvailabilityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MentorAvailabilityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorAvailabilityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MentorAvailabilityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorAvailabilityPayload>
+        }
+        findFirst: {
+          args: Prisma.MentorAvailabilityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorAvailabilityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MentorAvailabilityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorAvailabilityPayload>
+        }
+        findMany: {
+          args: Prisma.MentorAvailabilityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorAvailabilityPayload>[]
+        }
+        create: {
+          args: Prisma.MentorAvailabilityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorAvailabilityPayload>
+        }
+        createMany: {
+          args: Prisma.MentorAvailabilityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MentorAvailabilityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorAvailabilityPayload>[]
+        }
+        delete: {
+          args: Prisma.MentorAvailabilityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorAvailabilityPayload>
+        }
+        update: {
+          args: Prisma.MentorAvailabilityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorAvailabilityPayload>
+        }
+        deleteMany: {
+          args: Prisma.MentorAvailabilityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MentorAvailabilityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MentorAvailabilityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorAvailabilityPayload>[]
+        }
+        upsert: {
+          args: Prisma.MentorAvailabilityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorAvailabilityPayload>
+        }
+        aggregate: {
+          args: Prisma.MentorAvailabilityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMentorAvailability>
+        }
+        groupBy: {
+          args: Prisma.MentorAvailabilityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MentorAvailabilityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MentorAvailabilityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MentorAvailabilityCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -923,7 +998,12 @@ export const ProfilesScalarFieldEnum = {
   password: 'password',
   role: 'role',
   tasks: 'tasks',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  expertise: 'expertise',
+  bio: 'bio',
+  profile_image_url: 'profile_image_url',
+  pricing_cents: 'pricing_cents',
+  timezone: 'timezone'
 } as const
 
 export type ProfilesScalarFieldEnum = (typeof ProfilesScalarFieldEnum)[keyof typeof ProfilesScalarFieldEnum]
@@ -994,11 +1074,25 @@ export const SessionScalarFieldEnum = {
   studentId: 'studentId',
   status: 'status',
   notes: 'notes',
+  availabilitySlotId: 'availabilitySlotId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const MentorAvailabilityScalarFieldEnum = {
+  id: 'id',
+  mentorId: 'mentorId',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MentorAvailabilityScalarFieldEnum = (typeof MentorAvailabilityScalarFieldEnum)[keyof typeof MentorAvailabilityScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1152,6 +1246,20 @@ export type EnumSessionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 export type ListEnumSessionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SessionStatus[]'>
     
 
+
+/**
+ * Reference to a field of type 'AvailabilityStatus'
+ */
+export type EnumAvailabilityStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AvailabilityStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AvailabilityStatus[]'
+ */
+export type ListEnumAvailabilityStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AvailabilityStatus[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -1268,6 +1376,7 @@ export type GlobalOmitConfig = {
   task_activities?: Prisma.task_activitiesOmit
   events?: Prisma.eventsOmit
   session?: Prisma.SessionOmit
+  mentorAvailability?: Prisma.MentorAvailabilityOmit
 }
 
 /* Types for Logging */

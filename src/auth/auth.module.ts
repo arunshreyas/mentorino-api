@@ -12,10 +12,17 @@ import { PrismaService } from '../prisma.service';
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET') || 'your-secret-key',
-        signOptions: { expiresIn: '24h' },
-      }),
+      useFactory: async (configService: ConfigService) => {
+        const secret = configService.get<string>('JWT_SECRET');
+        if (!secret && configService.get<string>('NODE_ENV') === 'production') {
+          throw new Error('JWT_SECRET is required in production');
+        }
+
+        return {
+          secret: secret || 'development-only-secret',
+          signOptions: { expiresIn: '24h' },
+        };
+      },
       inject: [ConfigService],
     }),
   ],

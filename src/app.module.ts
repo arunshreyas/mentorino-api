@@ -10,6 +10,7 @@ import { TaskActivitiesModule } from './task-activities/task-activities.module';
 import { EventsModule } from './events/events.module';
 import { SessionsModule } from './sessions/sessions.module';
 import { AuthModule } from './auth/auth.module';
+import { IntegrationPlaceholdersModule } from './integrations/integration-placeholders.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { AuthModule } from './auth/auth.module';
     EventsModule,
     SessionsModule,
     AuthModule,
+    IntegrationPlaceholdersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

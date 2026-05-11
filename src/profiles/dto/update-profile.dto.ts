@@ -1,26 +1,41 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateProfileDto } from './create-profile.dto';
-import { IsArray, IsDate, IsIn, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsEmail,
+  IsInt,
+  IsOptional,
+  IsString,
+  IsUrl,
+  Max,
+  MaxLength,
+  Min,
+} from 'class-validator';
 
-export class UpdateProfileDto extends PartialType(CreateProfileDto) {
+export class UpdateProfileDto {
     @IsOptional()
-    @IsString()
+    @IsEmail()
     email?: string;
     @IsOptional()
     @IsString()
+    @MaxLength(120)
     name?: string;
     @IsOptional()
     @IsString()
-    @IsIn(["student", "mentor"])
-    role?: string;
+    @MaxLength(2000)
+    bio?: string;
     @IsOptional()
     @IsArray()
     @IsString({ each: true })
-    tasks?: string[];
+    expertise?: string[];
     @IsOptional()
-    @IsDate()
-    created_at?: Date;
+    @IsUrl({ require_protocol: true })
+    profile_image_url?: string;
     @IsOptional()
-    @IsDate()
-    updated_at?: Date;
+    @IsInt()
+    @Min(0)
+    @Max(10000000)
+    pricing_cents?: number;
+    @IsOptional()
+    @IsString()
+    @MaxLength(80)
+    timezone?: string;
 }

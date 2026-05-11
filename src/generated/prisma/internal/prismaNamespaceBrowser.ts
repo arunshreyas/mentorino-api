@@ -56,7 +56,8 @@ export const ModelName = {
   bookings: 'bookings',
   task_activities: 'task_activities',
   events: 'events',
-  Session: 'Session'
+  Session: 'Session',
+  MentorAvailability: 'MentorAvailability'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -106,7 +107,12 @@ export const ProfilesScalarFieldEnum = {
   password: 'password',
   role: 'role',
   tasks: 'tasks',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  expertise: 'expertise',
+  bio: 'bio',
+  profile_image_url: 'profile_image_url',
+  pricing_cents: 'pricing_cents',
+  timezone: 'timezone'
 } as const
 
 export type ProfilesScalarFieldEnum = (typeof ProfilesScalarFieldEnum)[keyof typeof ProfilesScalarFieldEnum]
@@ -177,11 +183,25 @@ export const SessionScalarFieldEnum = {
   studentId: 'studentId',
   status: 'status',
   notes: 'notes',
+  availabilitySlotId: 'availabilitySlotId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const MentorAvailabilityScalarFieldEnum = {
+  id: 'id',
+  mentorId: 'mentorId',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MentorAvailabilityScalarFieldEnum = (typeof MentorAvailabilityScalarFieldEnum)[keyof typeof MentorAvailabilityScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -16,9 +16,19 @@ export class AdminApplicationsController {
     return this.applicationsService.findByStatus('pending');
   }
 
+  @Get('status/:status')
+  findByStatus(@Param('status') status: string) {
+    return this.applicationsService.findByStatus(status);
+  }
+
   @Get('all')
   findAll() {
     return this.applicationsService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.applicationsService.findOne(id, { role: Role.ADMIN });
   }
 
   @Patch(':id/approve')

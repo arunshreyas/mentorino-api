@@ -44,6 +44,7 @@ export type SessionMinAggregateOutputType = {
   studentId: string | null
   status: $Enums.SessionStatus | null
   notes: string | null
+  availabilitySlotId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -58,6 +59,7 @@ export type SessionMaxAggregateOutputType = {
   studentId: string | null
   status: $Enums.SessionStatus | null
   notes: string | null
+  availabilitySlotId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -72,6 +74,7 @@ export type SessionCountAggregateOutputType = {
   studentId: number
   status: number
   notes: number
+  availabilitySlotId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -96,6 +99,7 @@ export type SessionMinAggregateInputType = {
   studentId?: true
   status?: true
   notes?: true
+  availabilitySlotId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -110,6 +114,7 @@ export type SessionMaxAggregateInputType = {
   studentId?: true
   status?: true
   notes?: true
+  availabilitySlotId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -124,6 +129,7 @@ export type SessionCountAggregateInputType = {
   studentId?: true
   status?: true
   notes?: true
+  availabilitySlotId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -225,6 +231,7 @@ export type SessionGroupByOutputType = {
   studentId: string
   status: $Enums.SessionStatus
   notes: string | null
+  availabilitySlotId: string | null
   createdAt: Date
   updatedAt: Date
   _count: SessionCountAggregateOutputType | null
@@ -262,10 +269,12 @@ export type SessionWhereInput = {
   studentId?: Prisma.StringFilter<"Session"> | string
   status?: Prisma.EnumSessionStatusFilter<"Session"> | $Enums.SessionStatus
   notes?: Prisma.StringNullableFilter<"Session"> | string | null
+  availabilitySlotId?: Prisma.StringNullableFilter<"Session"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Session"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Session"> | Date | string
   mentor?: Prisma.XOR<Prisma.ProfilesScalarRelationFilter, Prisma.profilesWhereInput>
   student?: Prisma.XOR<Prisma.ProfilesScalarRelationFilter, Prisma.profilesWhereInput>
+  availabilitySlot?: Prisma.XOR<Prisma.MentorAvailabilityNullableScalarRelationFilter, Prisma.MentorAvailabilityWhereInput> | null
 }
 
 export type SessionOrderByWithRelationInput = {
@@ -278,14 +287,17 @@ export type SessionOrderByWithRelationInput = {
   studentId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  availabilitySlotId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   mentor?: Prisma.profilesOrderByWithRelationInput
   student?: Prisma.profilesOrderByWithRelationInput
+  availabilitySlot?: Prisma.MentorAvailabilityOrderByWithRelationInput
 }
 
 export type SessionWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  availabilitySlotId?: string
   AND?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[]
   OR?: Prisma.SessionWhereInput[]
   NOT?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[]
@@ -301,7 +313,8 @@ export type SessionWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Session"> | Date | string
   mentor?: Prisma.XOR<Prisma.ProfilesScalarRelationFilter, Prisma.profilesWhereInput>
   student?: Prisma.XOR<Prisma.ProfilesScalarRelationFilter, Prisma.profilesWhereInput>
-}, "id">
+  availabilitySlot?: Prisma.XOR<Prisma.MentorAvailabilityNullableScalarRelationFilter, Prisma.MentorAvailabilityWhereInput> | null
+}, "id" | "availabilitySlotId">
 
 export type SessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -313,6 +326,7 @@ export type SessionOrderByWithAggregationInput = {
   studentId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  availabilitySlotId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SessionCountOrderByAggregateInput
@@ -335,6 +349,7 @@ export type SessionScalarWhereWithAggregatesInput = {
   studentId?: Prisma.StringWithAggregatesFilter<"Session"> | string
   status?: Prisma.EnumSessionStatusWithAggregatesFilter<"Session"> | $Enums.SessionStatus
   notes?: Prisma.StringNullableWithAggregatesFilter<"Session"> | string | null
+  availabilitySlotId?: Prisma.StringNullableWithAggregatesFilter<"Session"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Session"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Session"> | Date | string
 }
@@ -350,6 +365,7 @@ export type SessionCreateInput = {
   updatedAt?: Date | string
   mentor: Prisma.profilesCreateNestedOneWithoutMentorSessionsInput
   student: Prisma.profilesCreateNestedOneWithoutStudentSessionsInput
+  availabilitySlot?: Prisma.MentorAvailabilityCreateNestedOneWithoutSessionInput
 }
 
 export type SessionUncheckedCreateInput = {
@@ -362,6 +378,7 @@ export type SessionUncheckedCreateInput = {
   studentId: string
   status?: $Enums.SessionStatus
   notes?: string | null
+  availabilitySlotId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -377,6 +394,7 @@ export type SessionUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mentor?: Prisma.profilesUpdateOneRequiredWithoutMentorSessionsNestedInput
   student?: Prisma.profilesUpdateOneRequiredWithoutStudentSessionsNestedInput
+  availabilitySlot?: Prisma.MentorAvailabilityUpdateOneWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateInput = {
@@ -389,6 +407,7 @@ export type SessionUncheckedUpdateInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availabilitySlotId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -403,6 +422,7 @@ export type SessionCreateManyInput = {
   studentId: string
   status?: $Enums.SessionStatus
   notes?: string | null
+  availabilitySlotId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -428,6 +448,7 @@ export type SessionUncheckedUpdateManyInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availabilitySlotId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -452,6 +473,7 @@ export type SessionCountOrderByAggregateInput = {
   studentId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  availabilitySlotId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -470,6 +492,7 @@ export type SessionMaxOrderByAggregateInput = {
   studentId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  availabilitySlotId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -484,12 +507,18 @@ export type SessionMinOrderByAggregateInput = {
   studentId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  availabilitySlotId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type SessionSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+}
+
+export type SessionNullableScalarRelationFilter = {
+  is?: Prisma.SessionWhereInput | null
+  isNot?: Prisma.SessionWhereInput | null
 }
 
 export type SessionCreateNestedManyWithoutMentorInput = {
@@ -588,6 +617,38 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type SessionCreateNestedOneWithoutAvailabilitySlotInput = {
+  create?: Prisma.XOR<Prisma.SessionCreateWithoutAvailabilitySlotInput, Prisma.SessionUncheckedCreateWithoutAvailabilitySlotInput>
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutAvailabilitySlotInput
+  connect?: Prisma.SessionWhereUniqueInput
+}
+
+export type SessionUncheckedCreateNestedOneWithoutAvailabilitySlotInput = {
+  create?: Prisma.XOR<Prisma.SessionCreateWithoutAvailabilitySlotInput, Prisma.SessionUncheckedCreateWithoutAvailabilitySlotInput>
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutAvailabilitySlotInput
+  connect?: Prisma.SessionWhereUniqueInput
+}
+
+export type SessionUpdateOneWithoutAvailabilitySlotNestedInput = {
+  create?: Prisma.XOR<Prisma.SessionCreateWithoutAvailabilitySlotInput, Prisma.SessionUncheckedCreateWithoutAvailabilitySlotInput>
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutAvailabilitySlotInput
+  upsert?: Prisma.SessionUpsertWithoutAvailabilitySlotInput
+  disconnect?: Prisma.SessionWhereInput | boolean
+  delete?: Prisma.SessionWhereInput | boolean
+  connect?: Prisma.SessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SessionUpdateToOneWithWhereWithoutAvailabilitySlotInput, Prisma.SessionUpdateWithoutAvailabilitySlotInput>, Prisma.SessionUncheckedUpdateWithoutAvailabilitySlotInput>
+}
+
+export type SessionUncheckedUpdateOneWithoutAvailabilitySlotNestedInput = {
+  create?: Prisma.XOR<Prisma.SessionCreateWithoutAvailabilitySlotInput, Prisma.SessionUncheckedCreateWithoutAvailabilitySlotInput>
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutAvailabilitySlotInput
+  upsert?: Prisma.SessionUpsertWithoutAvailabilitySlotInput
+  disconnect?: Prisma.SessionWhereInput | boolean
+  delete?: Prisma.SessionWhereInput | boolean
+  connect?: Prisma.SessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SessionUpdateToOneWithWhereWithoutAvailabilitySlotInput, Prisma.SessionUpdateWithoutAvailabilitySlotInput>, Prisma.SessionUncheckedUpdateWithoutAvailabilitySlotInput>
+}
+
 export type SessionCreateWithoutMentorInput = {
   title: string
   description?: string | null
@@ -598,6 +659,7 @@ export type SessionCreateWithoutMentorInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   student: Prisma.profilesCreateNestedOneWithoutStudentSessionsInput
+  availabilitySlot?: Prisma.MentorAvailabilityCreateNestedOneWithoutSessionInput
 }
 
 export type SessionUncheckedCreateWithoutMentorInput = {
@@ -609,6 +671,7 @@ export type SessionUncheckedCreateWithoutMentorInput = {
   studentId: string
   status?: $Enums.SessionStatus
   notes?: string | null
+  availabilitySlotId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -633,6 +696,7 @@ export type SessionCreateWithoutStudentInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   mentor: Prisma.profilesCreateNestedOneWithoutMentorSessionsInput
+  availabilitySlot?: Prisma.MentorAvailabilityCreateNestedOneWithoutSessionInput
 }
 
 export type SessionUncheckedCreateWithoutStudentInput = {
@@ -644,6 +708,7 @@ export type SessionUncheckedCreateWithoutStudentInput = {
   mentorId: string
   status?: $Enums.SessionStatus
   notes?: string | null
+  availabilitySlotId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -687,6 +752,7 @@ export type SessionScalarWhereInput = {
   studentId?: Prisma.StringFilter<"Session"> | string
   status?: Prisma.EnumSessionStatusFilter<"Session"> | $Enums.SessionStatus
   notes?: Prisma.StringNullableFilter<"Session"> | string | null
+  availabilitySlotId?: Prisma.StringNullableFilter<"Session"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Session"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Session"> | Date | string
 }
@@ -707,6 +773,76 @@ export type SessionUpdateManyWithWhereWithoutStudentInput = {
   data: Prisma.XOR<Prisma.SessionUpdateManyMutationInput, Prisma.SessionUncheckedUpdateManyWithoutStudentInput>
 }
 
+export type SessionCreateWithoutAvailabilitySlotInput = {
+  title: string
+  description?: string | null
+  startTime: Date | string
+  endTime: Date | string
+  status?: $Enums.SessionStatus
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mentor: Prisma.profilesCreateNestedOneWithoutMentorSessionsInput
+  student: Prisma.profilesCreateNestedOneWithoutStudentSessionsInput
+}
+
+export type SessionUncheckedCreateWithoutAvailabilitySlotInput = {
+  id?: number
+  title: string
+  description?: string | null
+  startTime: Date | string
+  endTime: Date | string
+  mentorId: string
+  studentId: string
+  status?: $Enums.SessionStatus
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SessionCreateOrConnectWithoutAvailabilitySlotInput = {
+  where: Prisma.SessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.SessionCreateWithoutAvailabilitySlotInput, Prisma.SessionUncheckedCreateWithoutAvailabilitySlotInput>
+}
+
+export type SessionUpsertWithoutAvailabilitySlotInput = {
+  update: Prisma.XOR<Prisma.SessionUpdateWithoutAvailabilitySlotInput, Prisma.SessionUncheckedUpdateWithoutAvailabilitySlotInput>
+  create: Prisma.XOR<Prisma.SessionCreateWithoutAvailabilitySlotInput, Prisma.SessionUncheckedCreateWithoutAvailabilitySlotInput>
+  where?: Prisma.SessionWhereInput
+}
+
+export type SessionUpdateToOneWithWhereWithoutAvailabilitySlotInput = {
+  where?: Prisma.SessionWhereInput
+  data: Prisma.XOR<Prisma.SessionUpdateWithoutAvailabilitySlotInput, Prisma.SessionUncheckedUpdateWithoutAvailabilitySlotInput>
+}
+
+export type SessionUpdateWithoutAvailabilitySlotInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mentor?: Prisma.profilesUpdateOneRequiredWithoutMentorSessionsNestedInput
+  student?: Prisma.profilesUpdateOneRequiredWithoutStudentSessionsNestedInput
+}
+
+export type SessionUncheckedUpdateWithoutAvailabilitySlotInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mentorId?: Prisma.StringFieldUpdateOperationsInput | string
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type SessionCreateManyMentorInput = {
   id?: number
   title: string
@@ -716,6 +852,7 @@ export type SessionCreateManyMentorInput = {
   studentId: string
   status?: $Enums.SessionStatus
   notes?: string | null
+  availabilitySlotId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -729,6 +866,7 @@ export type SessionCreateManyStudentInput = {
   mentorId: string
   status?: $Enums.SessionStatus
   notes?: string | null
+  availabilitySlotId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -743,6 +881,7 @@ export type SessionUpdateWithoutMentorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.profilesUpdateOneRequiredWithoutStudentSessionsNestedInput
+  availabilitySlot?: Prisma.MentorAvailabilityUpdateOneWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateWithoutMentorInput = {
@@ -754,6 +893,7 @@ export type SessionUncheckedUpdateWithoutMentorInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availabilitySlotId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -767,6 +907,7 @@ export type SessionUncheckedUpdateManyWithoutMentorInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availabilitySlotId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -781,6 +922,7 @@ export type SessionUpdateWithoutStudentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mentor?: Prisma.profilesUpdateOneRequiredWithoutMentorSessionsNestedInput
+  availabilitySlot?: Prisma.MentorAvailabilityUpdateOneWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateWithoutStudentInput = {
@@ -792,6 +934,7 @@ export type SessionUncheckedUpdateWithoutStudentInput = {
   mentorId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availabilitySlotId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -805,6 +948,7 @@ export type SessionUncheckedUpdateManyWithoutStudentInput = {
   mentorId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availabilitySlotId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -821,10 +965,12 @@ export type SessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   studentId?: boolean
   status?: boolean
   notes?: boolean
+  availabilitySlotId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   mentor?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
   student?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
+  availabilitySlot?: boolean | Prisma.Session$availabilitySlotArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
 export type SessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -837,10 +983,12 @@ export type SessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   studentId?: boolean
   status?: boolean
   notes?: boolean
+  availabilitySlotId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   mentor?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
   student?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
+  availabilitySlot?: boolean | Prisma.Session$availabilitySlotArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
 export type SessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -853,10 +1001,12 @@ export type SessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   studentId?: boolean
   status?: boolean
   notes?: boolean
+  availabilitySlotId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   mentor?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
   student?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
+  availabilitySlot?: boolean | Prisma.Session$availabilitySlotArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
 export type SessionSelectScalar = {
@@ -869,22 +1019,26 @@ export type SessionSelectScalar = {
   studentId?: boolean
   status?: boolean
   notes?: boolean
+  availabilitySlotId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "startTime" | "endTime" | "mentorId" | "studentId" | "status" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["session"]>
+export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "startTime" | "endTime" | "mentorId" | "studentId" | "status" | "notes" | "availabilitySlotId" | "createdAt" | "updatedAt", ExtArgs["result"]["session"]>
 export type SessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   mentor?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
   student?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
+  availabilitySlot?: boolean | Prisma.Session$availabilitySlotArgs<ExtArgs>
 }
 export type SessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   mentor?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
   student?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
+  availabilitySlot?: boolean | Prisma.Session$availabilitySlotArgs<ExtArgs>
 }
 export type SessionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   mentor?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
   student?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
+  availabilitySlot?: boolean | Prisma.Session$availabilitySlotArgs<ExtArgs>
 }
 
 export type $SessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -892,6 +1046,7 @@ export type $SessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     mentor: Prisma.$profilesPayload<ExtArgs>
     student: Prisma.$profilesPayload<ExtArgs>
+    availabilitySlot: Prisma.$MentorAvailabilityPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -903,6 +1058,7 @@ export type $SessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     studentId: string
     status: $Enums.SessionStatus
     notes: string | null
+    availabilitySlotId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["session"]>
@@ -1301,6 +1457,7 @@ export interface Prisma__SessionClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   mentor<T extends Prisma.profilesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profilesDefaultArgs<ExtArgs>>): Prisma.Prisma__profilesClient<runtime.Types.Result.GetResult<Prisma.$profilesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   student<T extends Prisma.profilesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profilesDefaultArgs<ExtArgs>>): Prisma.Prisma__profilesClient<runtime.Types.Result.GetResult<Prisma.$profilesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  availabilitySlot<T extends Prisma.Session$availabilitySlotArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Session$availabilitySlotArgs<ExtArgs>>): Prisma.Prisma__MentorAvailabilityClient<runtime.Types.Result.GetResult<Prisma.$MentorAvailabilityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1339,6 +1496,7 @@ export interface SessionFieldRefs {
   readonly studentId: Prisma.FieldRef<"Session", 'String'>
   readonly status: Prisma.FieldRef<"Session", 'SessionStatus'>
   readonly notes: Prisma.FieldRef<"Session", 'String'>
+  readonly availabilitySlotId: Prisma.FieldRef<"Session", 'String'>
   readonly createdAt: Prisma.FieldRef<"Session", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Session", 'DateTime'>
 }
@@ -1739,6 +1897,25 @@ export type SessionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Sessions to delete.
    */
   limit?: number
+}
+
+/**
+ * Session.availabilitySlot
+ */
+export type Session$availabilitySlotArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MentorAvailability
+   */
+  select?: Prisma.MentorAvailabilitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MentorAvailability
+   */
+  omit?: Prisma.MentorAvailabilityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MentorAvailabilityInclude<ExtArgs> | null
+  where?: Prisma.MentorAvailabilityWhereInput
 }
 
 /**

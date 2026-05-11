@@ -1,25 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { ConfigService } from '@nestjs/config';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { DataInterceptor } from './common/interceptors/data-interceptor';
-import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   const logger = new Logger('Bootstrap');
 
-  // Request logging middleware
   app.use((req, res, next) => {
     const start = Date.now();
     const timestamp = new Date().toISOString();
-    
+
     logger.log(`[${timestamp}] ${req.method} ${req.url} - Request started`);
-    
-    // Log request body for POST/PUT requests (excluding sensitive data)
+
     if (['POST', 'PUT', 'PATCH'].includes(req.method) && req.body) {
       const sanitizedBody = { ...req.body };
       if (sanitizedBody.password) sanitizedBody.password = '[REDACTED]';
@@ -28,7 +25,6 @@ async function bootstrap() {
       logger.log(`[${timestamp}] Request body: ${JSON.stringify(sanitizedBody)}`);
     }
 
-    // Log headers for auth requests
     if (req.url.includes('/auth/')) {
       const authHeader = req.headers.authorization;
       logger.log(`[${timestamp}] Auth header: ${authHeader ? '[TOKEN_PRESENT]' : '[NO_TOKEN]'}`);
@@ -42,7 +38,6 @@ async function bootstrap() {
     next();
   });
 
-  // Global validation pipe
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -54,22 +49,16 @@ async function bootstrap() {
     }),
   );
 
-  // Global exception filter
   app.useGlobalFilters(new HttpExceptionFilter());
-
-  // Global data interceptor
   app.useGlobalInterceptors(new DataInterceptor());
-
-  // Global throttler guard
   app.useGlobalGuards(app.get(ThrottlerGuard));
 
-  // CORS
+  const corsOrigin = configService.get<string>('CORS_ORIGIN') ?? 'http://localhost:3000';
   app.enableCors({
-    origin: ['http://localhost:3001'],
+    origin: corsOrigin.split(',').map((origin) => origin.trim()),
     credentials: true,
   });
 
-  // Security headers
   app.use((req, res, next) => {
     res.header('X-Content-Type-Options', 'nosniff');
     res.header('X-Frame-Options', 'DENY');
@@ -79,12 +68,13 @@ async function bootstrap() {
 
   const port = process.env.PORT ?? 3001;
   await app.listen(port);
-  
-  logger.log(`🚀 Mentorino API Server running on port ${port}`);
-  logger.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-  logger.log(`🔗 CORS Origin: ${configService.get<string>('CORS_ORIGIN') || '*'}`);
-  logger.log(`🛡️  Security headers enabled`);
-  logger.log(`⚡ Rate limiting enabled`);
-  logger.log(`📝 Request logging enabled`);
+
+  logger.log(`Mentorino API server running on port ${port}`);
+  logger.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  logger.log(`CORS origin: ${corsOrigin}`);
+  logger.log('Security headers enabled');
+  logger.log('Rate limiting enabled');
+  logger.log('Request logging enabled');
 }
+
 bootstrap();

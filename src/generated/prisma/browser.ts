@@ -47,3 +47,8 @@ export type events = Prisma.eventsModel
  * 
  */
 export type Session = Prisma.SessionModel
+/**
+ * Model MentorAvailability
+ * 
+ */
+export type MentorAvailability = Prisma.MentorAvailabilityModel

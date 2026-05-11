@@ -20,8 +20,18 @@ export type profilesModel = runtime.Types.Result.DefaultSelection<Prisma.$profil
 
 export type AggregateProfiles = {
   _count: ProfilesCountAggregateOutputType | null
+  _avg: ProfilesAvgAggregateOutputType | null
+  _sum: ProfilesSumAggregateOutputType | null
   _min: ProfilesMinAggregateOutputType | null
   _max: ProfilesMaxAggregateOutputType | null
+}
+
+export type ProfilesAvgAggregateOutputType = {
+  pricing_cents: number | null
+}
+
+export type ProfilesSumAggregateOutputType = {
+  pricing_cents: number | null
 }
 
 export type ProfilesMinAggregateOutputType = {
@@ -31,6 +41,10 @@ export type ProfilesMinAggregateOutputType = {
   password: string | null
   role: $Enums.Role | null
   created_at: Date | null
+  bio: string | null
+  profile_image_url: string | null
+  pricing_cents: number | null
+  timezone: string | null
 }
 
 export type ProfilesMaxAggregateOutputType = {
@@ -40,6 +54,10 @@ export type ProfilesMaxAggregateOutputType = {
   password: string | null
   role: $Enums.Role | null
   created_at: Date | null
+  bio: string | null
+  profile_image_url: string | null
+  pricing_cents: number | null
+  timezone: string | null
 }
 
 export type ProfilesCountAggregateOutputType = {
@@ -50,9 +68,22 @@ export type ProfilesCountAggregateOutputType = {
   role: number
   tasks: number
   created_at: number
+  expertise: number
+  bio: number
+  profile_image_url: number
+  pricing_cents: number
+  timezone: number
   _all: number
 }
 
+
+export type ProfilesAvgAggregateInputType = {
+  pricing_cents?: true
+}
+
+export type ProfilesSumAggregateInputType = {
+  pricing_cents?: true
+}
 
 export type ProfilesMinAggregateInputType = {
   id?: true
@@ -61,6 +92,10 @@ export type ProfilesMinAggregateInputType = {
   password?: true
   role?: true
   created_at?: true
+  bio?: true
+  profile_image_url?: true
+  pricing_cents?: true
+  timezone?: true
 }
 
 export type ProfilesMaxAggregateInputType = {
@@ -70,6 +105,10 @@ export type ProfilesMaxAggregateInputType = {
   password?: true
   role?: true
   created_at?: true
+  bio?: true
+  profile_image_url?: true
+  pricing_cents?: true
+  timezone?: true
 }
 
 export type ProfilesCountAggregateInputType = {
@@ -80,6 +119,11 @@ export type ProfilesCountAggregateInputType = {
   role?: true
   tasks?: true
   created_at?: true
+  expertise?: true
+  bio?: true
+  profile_image_url?: true
+  pricing_cents?: true
+  timezone?: true
   _all?: true
 }
 
@@ -121,6 +165,18 @@ export type ProfilesAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inter
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ProfilesAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ProfilesSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProfilesMinAggregateInputType
@@ -151,6 +207,8 @@ export type profilesGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   _count?: ProfilesCountAggregateInputType | true
+  _avg?: ProfilesAvgAggregateInputType
+  _sum?: ProfilesSumAggregateInputType
   _min?: ProfilesMinAggregateInputType
   _max?: ProfilesMaxAggregateInputType
 }
@@ -163,7 +221,14 @@ export type ProfilesGroupByOutputType = {
   role: $Enums.Role
   tasks: runtime.JsonValue
   created_at: Date
+  expertise: runtime.JsonValue
+  bio: string | null
+  profile_image_url: string | null
+  pricing_cents: number | null
+  timezone: string | null
   _count: ProfilesCountAggregateOutputType | null
+  _avg: ProfilesAvgAggregateOutputType | null
+  _sum: ProfilesSumAggregateOutputType | null
   _min: ProfilesMinAggregateOutputType | null
   _max: ProfilesMaxAggregateOutputType | null
 }
@@ -194,10 +259,16 @@ export type profilesWhereInput = {
   role?: Prisma.EnumRoleFilter<"profiles"> | $Enums.Role
   tasks?: Prisma.JsonFilter<"profiles">
   created_at?: Prisma.DateTimeFilter<"profiles"> | Date | string
+  expertise?: Prisma.JsonFilter<"profiles">
+  bio?: Prisma.StringNullableFilter<"profiles"> | string | null
+  profile_image_url?: Prisma.StringNullableFilter<"profiles"> | string | null
+  pricing_cents?: Prisma.IntNullableFilter<"profiles"> | number | null
+  timezone?: Prisma.StringNullableFilter<"profiles"> | string | null
   bookings?: Prisma.BookingsListRelationFilter
   task_activities?: Prisma.Task_activitiesListRelationFilter
   mentorSessions?: Prisma.SessionListRelationFilter
   studentSessions?: Prisma.SessionListRelationFilter
+  availabilitySlots?: Prisma.MentorAvailabilityListRelationFilter
 }
 
 export type profilesOrderByWithRelationInput = {
@@ -208,10 +279,16 @@ export type profilesOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   tasks?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  expertise?: Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  profile_image_url?: Prisma.SortOrderInput | Prisma.SortOrder
+  pricing_cents?: Prisma.SortOrderInput | Prisma.SortOrder
+  timezone?: Prisma.SortOrderInput | Prisma.SortOrder
   bookings?: Prisma.bookingsOrderByRelationAggregateInput
   task_activities?: Prisma.task_activitiesOrderByRelationAggregateInput
   mentorSessions?: Prisma.SessionOrderByRelationAggregateInput
   studentSessions?: Prisma.SessionOrderByRelationAggregateInput
+  availabilitySlots?: Prisma.MentorAvailabilityOrderByRelationAggregateInput
 }
 
 export type profilesWhereUniqueInput = Prisma.AtLeast<{
@@ -225,10 +302,16 @@ export type profilesWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumRoleFilter<"profiles"> | $Enums.Role
   tasks?: Prisma.JsonFilter<"profiles">
   created_at?: Prisma.DateTimeFilter<"profiles"> | Date | string
+  expertise?: Prisma.JsonFilter<"profiles">
+  bio?: Prisma.StringNullableFilter<"profiles"> | string | null
+  profile_image_url?: Prisma.StringNullableFilter<"profiles"> | string | null
+  pricing_cents?: Prisma.IntNullableFilter<"profiles"> | number | null
+  timezone?: Prisma.StringNullableFilter<"profiles"> | string | null
   bookings?: Prisma.BookingsListRelationFilter
   task_activities?: Prisma.Task_activitiesListRelationFilter
   mentorSessions?: Prisma.SessionListRelationFilter
   studentSessions?: Prisma.SessionListRelationFilter
+  availabilitySlots?: Prisma.MentorAvailabilityListRelationFilter
 }, "id" | "email">
 
 export type profilesOrderByWithAggregationInput = {
@@ -239,9 +322,16 @@ export type profilesOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   tasks?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  expertise?: Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  profile_image_url?: Prisma.SortOrderInput | Prisma.SortOrder
+  pricing_cents?: Prisma.SortOrderInput | Prisma.SortOrder
+  timezone?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.profilesCountOrderByAggregateInput
+  _avg?: Prisma.profilesAvgOrderByAggregateInput
   _max?: Prisma.profilesMaxOrderByAggregateInput
   _min?: Prisma.profilesMinOrderByAggregateInput
+  _sum?: Prisma.profilesSumOrderByAggregateInput
 }
 
 export type profilesScalarWhereWithAggregatesInput = {
@@ -255,6 +345,11 @@ export type profilesScalarWhereWithAggregatesInput = {
   role?: Prisma.EnumRoleWithAggregatesFilter<"profiles"> | $Enums.Role
   tasks?: Prisma.JsonWithAggregatesFilter<"profiles">
   created_at?: Prisma.DateTimeWithAggregatesFilter<"profiles"> | Date | string
+  expertise?: Prisma.JsonWithAggregatesFilter<"profiles">
+  bio?: Prisma.StringNullableWithAggregatesFilter<"profiles"> | string | null
+  profile_image_url?: Prisma.StringNullableWithAggregatesFilter<"profiles"> | string | null
+  pricing_cents?: Prisma.IntNullableWithAggregatesFilter<"profiles"> | number | null
+  timezone?: Prisma.StringNullableWithAggregatesFilter<"profiles"> | string | null
 }
 
 export type profilesCreateInput = {
@@ -265,10 +360,16 @@ export type profilesCreateInput = {
   role?: $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
   bookings?: Prisma.bookingsCreateNestedManyWithoutUserInput
   task_activities?: Prisma.task_activitiesCreateNestedManyWithoutUserInput
   mentorSessions?: Prisma.SessionCreateNestedManyWithoutMentorInput
   studentSessions?: Prisma.SessionCreateNestedManyWithoutStudentInput
+  availabilitySlots?: Prisma.MentorAvailabilityCreateNestedManyWithoutMentorInput
 }
 
 export type profilesUncheckedCreateInput = {
@@ -279,10 +380,16 @@ export type profilesUncheckedCreateInput = {
   role?: $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
   bookings?: Prisma.bookingsUncheckedCreateNestedManyWithoutUserInput
   task_activities?: Prisma.task_activitiesUncheckedCreateNestedManyWithoutUserInput
   mentorSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutMentorInput
   studentSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutStudentInput
+  availabilitySlots?: Prisma.MentorAvailabilityUncheckedCreateNestedManyWithoutMentorInput
 }
 
 export type profilesUpdateInput = {
@@ -293,10 +400,16 @@ export type profilesUpdateInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookings?: Prisma.bookingsUpdateManyWithoutUserNestedInput
   task_activities?: Prisma.task_activitiesUpdateManyWithoutUserNestedInput
   mentorSessions?: Prisma.SessionUpdateManyWithoutMentorNestedInput
   studentSessions?: Prisma.SessionUpdateManyWithoutStudentNestedInput
+  availabilitySlots?: Prisma.MentorAvailabilityUpdateManyWithoutMentorNestedInput
 }
 
 export type profilesUncheckedUpdateInput = {
@@ -307,10 +420,16 @@ export type profilesUncheckedUpdateInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookings?: Prisma.bookingsUncheckedUpdateManyWithoutUserNestedInput
   task_activities?: Prisma.task_activitiesUncheckedUpdateManyWithoutUserNestedInput
   mentorSessions?: Prisma.SessionUncheckedUpdateManyWithoutMentorNestedInput
   studentSessions?: Prisma.SessionUncheckedUpdateManyWithoutStudentNestedInput
+  availabilitySlots?: Prisma.MentorAvailabilityUncheckedUpdateManyWithoutMentorNestedInput
 }
 
 export type profilesCreateManyInput = {
@@ -321,6 +440,11 @@ export type profilesCreateManyInput = {
   role?: $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
 }
 
 export type profilesUpdateManyMutationInput = {
@@ -331,6 +455,11 @@ export type profilesUpdateManyMutationInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type profilesUncheckedUpdateManyInput = {
@@ -341,6 +470,11 @@ export type profilesUncheckedUpdateManyInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type profilesCountOrderByAggregateInput = {
@@ -351,6 +485,15 @@ export type profilesCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   tasks?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  expertise?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  profile_image_url?: Prisma.SortOrder
+  pricing_cents?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+}
+
+export type profilesAvgOrderByAggregateInput = {
+  pricing_cents?: Prisma.SortOrder
 }
 
 export type profilesMaxOrderByAggregateInput = {
@@ -360,6 +503,10 @@ export type profilesMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  profile_image_url?: Prisma.SortOrder
+  pricing_cents?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
 }
 
 export type profilesMinOrderByAggregateInput = {
@@ -369,6 +516,14 @@ export type profilesMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  profile_image_url?: Prisma.SortOrder
+  pricing_cents?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+}
+
+export type profilesSumOrderByAggregateInput = {
+  pricing_cents?: Prisma.SortOrder
 }
 
 export type ProfilesScalarRelationFilter = {
@@ -436,6 +591,20 @@ export type profilesUpdateOneRequiredWithoutStudentSessionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.profilesUpdateToOneWithWhereWithoutStudentSessionsInput, Prisma.profilesUpdateWithoutStudentSessionsInput>, Prisma.profilesUncheckedUpdateWithoutStudentSessionsInput>
 }
 
+export type profilesCreateNestedOneWithoutAvailabilitySlotsInput = {
+  create?: Prisma.XOR<Prisma.profilesCreateWithoutAvailabilitySlotsInput, Prisma.profilesUncheckedCreateWithoutAvailabilitySlotsInput>
+  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutAvailabilitySlotsInput
+  connect?: Prisma.profilesWhereUniqueInput
+}
+
+export type profilesUpdateOneRequiredWithoutAvailabilitySlotsNestedInput = {
+  create?: Prisma.XOR<Prisma.profilesCreateWithoutAvailabilitySlotsInput, Prisma.profilesUncheckedCreateWithoutAvailabilitySlotsInput>
+  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutAvailabilitySlotsInput
+  upsert?: Prisma.profilesUpsertWithoutAvailabilitySlotsInput
+  connect?: Prisma.profilesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.profilesUpdateToOneWithWhereWithoutAvailabilitySlotsInput, Prisma.profilesUpdateWithoutAvailabilitySlotsInput>, Prisma.profilesUncheckedUpdateWithoutAvailabilitySlotsInput>
+}
+
 export type profilesCreateWithoutBookingsInput = {
   id: string
   email: string
@@ -444,9 +613,15 @@ export type profilesCreateWithoutBookingsInput = {
   role?: $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
   task_activities?: Prisma.task_activitiesCreateNestedManyWithoutUserInput
   mentorSessions?: Prisma.SessionCreateNestedManyWithoutMentorInput
   studentSessions?: Prisma.SessionCreateNestedManyWithoutStudentInput
+  availabilitySlots?: Prisma.MentorAvailabilityCreateNestedManyWithoutMentorInput
 }
 
 export type profilesUncheckedCreateWithoutBookingsInput = {
@@ -457,9 +632,15 @@ export type profilesUncheckedCreateWithoutBookingsInput = {
   role?: $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
   task_activities?: Prisma.task_activitiesUncheckedCreateNestedManyWithoutUserInput
   mentorSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutMentorInput
   studentSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutStudentInput
+  availabilitySlots?: Prisma.MentorAvailabilityUncheckedCreateNestedManyWithoutMentorInput
 }
 
 export type profilesCreateOrConnectWithoutBookingsInput = {
@@ -486,9 +667,15 @@ export type profilesUpdateWithoutBookingsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   task_activities?: Prisma.task_activitiesUpdateManyWithoutUserNestedInput
   mentorSessions?: Prisma.SessionUpdateManyWithoutMentorNestedInput
   studentSessions?: Prisma.SessionUpdateManyWithoutStudentNestedInput
+  availabilitySlots?: Prisma.MentorAvailabilityUpdateManyWithoutMentorNestedInput
 }
 
 export type profilesUncheckedUpdateWithoutBookingsInput = {
@@ -499,9 +686,15 @@ export type profilesUncheckedUpdateWithoutBookingsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   task_activities?: Prisma.task_activitiesUncheckedUpdateManyWithoutUserNestedInput
   mentorSessions?: Prisma.SessionUncheckedUpdateManyWithoutMentorNestedInput
   studentSessions?: Prisma.SessionUncheckedUpdateManyWithoutStudentNestedInput
+  availabilitySlots?: Prisma.MentorAvailabilityUncheckedUpdateManyWithoutMentorNestedInput
 }
 
 export type profilesCreateWithoutTask_activitiesInput = {
@@ -512,9 +705,15 @@ export type profilesCreateWithoutTask_activitiesInput = {
   role?: $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
   bookings?: Prisma.bookingsCreateNestedManyWithoutUserInput
   mentorSessions?: Prisma.SessionCreateNestedManyWithoutMentorInput
   studentSessions?: Prisma.SessionCreateNestedManyWithoutStudentInput
+  availabilitySlots?: Prisma.MentorAvailabilityCreateNestedManyWithoutMentorInput
 }
 
 export type profilesUncheckedCreateWithoutTask_activitiesInput = {
@@ -525,9 +724,15 @@ export type profilesUncheckedCreateWithoutTask_activitiesInput = {
   role?: $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
   bookings?: Prisma.bookingsUncheckedCreateNestedManyWithoutUserInput
   mentorSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutMentorInput
   studentSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutStudentInput
+  availabilitySlots?: Prisma.MentorAvailabilityUncheckedCreateNestedManyWithoutMentorInput
 }
 
 export type profilesCreateOrConnectWithoutTask_activitiesInput = {
@@ -554,9 +759,15 @@ export type profilesUpdateWithoutTask_activitiesInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookings?: Prisma.bookingsUpdateManyWithoutUserNestedInput
   mentorSessions?: Prisma.SessionUpdateManyWithoutMentorNestedInput
   studentSessions?: Prisma.SessionUpdateManyWithoutStudentNestedInput
+  availabilitySlots?: Prisma.MentorAvailabilityUpdateManyWithoutMentorNestedInput
 }
 
 export type profilesUncheckedUpdateWithoutTask_activitiesInput = {
@@ -567,9 +778,15 @@ export type profilesUncheckedUpdateWithoutTask_activitiesInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookings?: Prisma.bookingsUncheckedUpdateManyWithoutUserNestedInput
   mentorSessions?: Prisma.SessionUncheckedUpdateManyWithoutMentorNestedInput
   studentSessions?: Prisma.SessionUncheckedUpdateManyWithoutStudentNestedInput
+  availabilitySlots?: Prisma.MentorAvailabilityUncheckedUpdateManyWithoutMentorNestedInput
 }
 
 export type profilesCreateWithoutMentorSessionsInput = {
@@ -580,9 +797,15 @@ export type profilesCreateWithoutMentorSessionsInput = {
   role?: $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
   bookings?: Prisma.bookingsCreateNestedManyWithoutUserInput
   task_activities?: Prisma.task_activitiesCreateNestedManyWithoutUserInput
   studentSessions?: Prisma.SessionCreateNestedManyWithoutStudentInput
+  availabilitySlots?: Prisma.MentorAvailabilityCreateNestedManyWithoutMentorInput
 }
 
 export type profilesUncheckedCreateWithoutMentorSessionsInput = {
@@ -593,9 +816,15 @@ export type profilesUncheckedCreateWithoutMentorSessionsInput = {
   role?: $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
   bookings?: Prisma.bookingsUncheckedCreateNestedManyWithoutUserInput
   task_activities?: Prisma.task_activitiesUncheckedCreateNestedManyWithoutUserInput
   studentSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutStudentInput
+  availabilitySlots?: Prisma.MentorAvailabilityUncheckedCreateNestedManyWithoutMentorInput
 }
 
 export type profilesCreateOrConnectWithoutMentorSessionsInput = {
@@ -611,9 +840,15 @@ export type profilesCreateWithoutStudentSessionsInput = {
   role?: $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
   bookings?: Prisma.bookingsCreateNestedManyWithoutUserInput
   task_activities?: Prisma.task_activitiesCreateNestedManyWithoutUserInput
   mentorSessions?: Prisma.SessionCreateNestedManyWithoutMentorInput
+  availabilitySlots?: Prisma.MentorAvailabilityCreateNestedManyWithoutMentorInput
 }
 
 export type profilesUncheckedCreateWithoutStudentSessionsInput = {
@@ -624,9 +859,15 @@ export type profilesUncheckedCreateWithoutStudentSessionsInput = {
   role?: $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
   bookings?: Prisma.bookingsUncheckedCreateNestedManyWithoutUserInput
   task_activities?: Prisma.task_activitiesUncheckedCreateNestedManyWithoutUserInput
   mentorSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutMentorInput
+  availabilitySlots?: Prisma.MentorAvailabilityUncheckedCreateNestedManyWithoutMentorInput
 }
 
 export type profilesCreateOrConnectWithoutStudentSessionsInput = {
@@ -653,9 +894,15 @@ export type profilesUpdateWithoutMentorSessionsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookings?: Prisma.bookingsUpdateManyWithoutUserNestedInput
   task_activities?: Prisma.task_activitiesUpdateManyWithoutUserNestedInput
   studentSessions?: Prisma.SessionUpdateManyWithoutStudentNestedInput
+  availabilitySlots?: Prisma.MentorAvailabilityUpdateManyWithoutMentorNestedInput
 }
 
 export type profilesUncheckedUpdateWithoutMentorSessionsInput = {
@@ -666,9 +913,15 @@ export type profilesUncheckedUpdateWithoutMentorSessionsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookings?: Prisma.bookingsUncheckedUpdateManyWithoutUserNestedInput
   task_activities?: Prisma.task_activitiesUncheckedUpdateManyWithoutUserNestedInput
   studentSessions?: Prisma.SessionUncheckedUpdateManyWithoutStudentNestedInput
+  availabilitySlots?: Prisma.MentorAvailabilityUncheckedUpdateManyWithoutMentorNestedInput
 }
 
 export type profilesUpsertWithoutStudentSessionsInput = {
@@ -690,9 +943,15 @@ export type profilesUpdateWithoutStudentSessionsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookings?: Prisma.bookingsUpdateManyWithoutUserNestedInput
   task_activities?: Prisma.task_activitiesUpdateManyWithoutUserNestedInput
   mentorSessions?: Prisma.SessionUpdateManyWithoutMentorNestedInput
+  availabilitySlots?: Prisma.MentorAvailabilityUpdateManyWithoutMentorNestedInput
 }
 
 export type profilesUncheckedUpdateWithoutStudentSessionsInput = {
@@ -703,9 +962,107 @@ export type profilesUncheckedUpdateWithoutStudentSessionsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookings?: Prisma.bookingsUncheckedUpdateManyWithoutUserNestedInput
   task_activities?: Prisma.task_activitiesUncheckedUpdateManyWithoutUserNestedInput
   mentorSessions?: Prisma.SessionUncheckedUpdateManyWithoutMentorNestedInput
+  availabilitySlots?: Prisma.MentorAvailabilityUncheckedUpdateManyWithoutMentorNestedInput
+}
+
+export type profilesCreateWithoutAvailabilitySlotsInput = {
+  id: string
+  email: string
+  name: string
+  password: string
+  role?: $Enums.Role
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
+  bookings?: Prisma.bookingsCreateNestedManyWithoutUserInput
+  task_activities?: Prisma.task_activitiesCreateNestedManyWithoutUserInput
+  mentorSessions?: Prisma.SessionCreateNestedManyWithoutMentorInput
+  studentSessions?: Prisma.SessionCreateNestedManyWithoutStudentInput
+}
+
+export type profilesUncheckedCreateWithoutAvailabilitySlotsInput = {
+  id: string
+  email: string
+  name: string
+  password: string
+  role?: $Enums.Role
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  profile_image_url?: string | null
+  pricing_cents?: number | null
+  timezone?: string | null
+  bookings?: Prisma.bookingsUncheckedCreateNestedManyWithoutUserInput
+  task_activities?: Prisma.task_activitiesUncheckedCreateNestedManyWithoutUserInput
+  mentorSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutMentorInput
+  studentSessions?: Prisma.SessionUncheckedCreateNestedManyWithoutStudentInput
+}
+
+export type profilesCreateOrConnectWithoutAvailabilitySlotsInput = {
+  where: Prisma.profilesWhereUniqueInput
+  create: Prisma.XOR<Prisma.profilesCreateWithoutAvailabilitySlotsInput, Prisma.profilesUncheckedCreateWithoutAvailabilitySlotsInput>
+}
+
+export type profilesUpsertWithoutAvailabilitySlotsInput = {
+  update: Prisma.XOR<Prisma.profilesUpdateWithoutAvailabilitySlotsInput, Prisma.profilesUncheckedUpdateWithoutAvailabilitySlotsInput>
+  create: Prisma.XOR<Prisma.profilesCreateWithoutAvailabilitySlotsInput, Prisma.profilesUncheckedCreateWithoutAvailabilitySlotsInput>
+  where?: Prisma.profilesWhereInput
+}
+
+export type profilesUpdateToOneWithWhereWithoutAvailabilitySlotsInput = {
+  where?: Prisma.profilesWhereInput
+  data: Prisma.XOR<Prisma.profilesUpdateWithoutAvailabilitySlotsInput, Prisma.profilesUncheckedUpdateWithoutAvailabilitySlotsInput>
+}
+
+export type profilesUpdateWithoutAvailabilitySlotsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bookings?: Prisma.bookingsUpdateManyWithoutUserNestedInput
+  task_activities?: Prisma.task_activitiesUpdateManyWithoutUserNestedInput
+  mentorSessions?: Prisma.SessionUpdateManyWithoutMentorNestedInput
+  studentSessions?: Prisma.SessionUpdateManyWithoutStudentNestedInput
+}
+
+export type profilesUncheckedUpdateWithoutAvailabilitySlotsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expertise?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profile_image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pricing_cents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bookings?: Prisma.bookingsUncheckedUpdateManyWithoutUserNestedInput
+  task_activities?: Prisma.task_activitiesUncheckedUpdateManyWithoutUserNestedInput
+  mentorSessions?: Prisma.SessionUncheckedUpdateManyWithoutMentorNestedInput
+  studentSessions?: Prisma.SessionUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 
@@ -718,6 +1075,7 @@ export type ProfilesCountOutputType = {
   task_activities: number
   mentorSessions: number
   studentSessions: number
+  availabilitySlots: number
 }
 
 export type ProfilesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -725,6 +1083,7 @@ export type ProfilesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   task_activities?: boolean | ProfilesCountOutputTypeCountTask_activitiesArgs
   mentorSessions?: boolean | ProfilesCountOutputTypeCountMentorSessionsArgs
   studentSessions?: boolean | ProfilesCountOutputTypeCountStudentSessionsArgs
+  availabilitySlots?: boolean | ProfilesCountOutputTypeCountAvailabilitySlotsArgs
 }
 
 /**
@@ -765,6 +1124,13 @@ export type ProfilesCountOutputTypeCountStudentSessionsArgs<ExtArgs extends runt
   where?: Prisma.SessionWhereInput
 }
 
+/**
+ * ProfilesCountOutputType without action
+ */
+export type ProfilesCountOutputTypeCountAvailabilitySlotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MentorAvailabilityWhereInput
+}
+
 
 export type profilesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -774,10 +1140,16 @@ export type profilesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   role?: boolean
   tasks?: boolean
   created_at?: boolean
+  expertise?: boolean
+  bio?: boolean
+  profile_image_url?: boolean
+  pricing_cents?: boolean
+  timezone?: boolean
   bookings?: boolean | Prisma.profiles$bookingsArgs<ExtArgs>
   task_activities?: boolean | Prisma.profiles$task_activitiesArgs<ExtArgs>
   mentorSessions?: boolean | Prisma.profiles$mentorSessionsArgs<ExtArgs>
   studentSessions?: boolean | Prisma.profiles$studentSessionsArgs<ExtArgs>
+  availabilitySlots?: boolean | Prisma.profiles$availabilitySlotsArgs<ExtArgs>
   _count?: boolean | Prisma.ProfilesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profiles"]>
 
@@ -789,6 +1161,11 @@ export type profilesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   role?: boolean
   tasks?: boolean
   created_at?: boolean
+  expertise?: boolean
+  bio?: boolean
+  profile_image_url?: boolean
+  pricing_cents?: boolean
+  timezone?: boolean
 }, ExtArgs["result"]["profiles"]>
 
 export type profilesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -799,6 +1176,11 @@ export type profilesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   role?: boolean
   tasks?: boolean
   created_at?: boolean
+  expertise?: boolean
+  bio?: boolean
+  profile_image_url?: boolean
+  pricing_cents?: boolean
+  timezone?: boolean
 }, ExtArgs["result"]["profiles"]>
 
 export type profilesSelectScalar = {
@@ -809,14 +1191,20 @@ export type profilesSelectScalar = {
   role?: boolean
   tasks?: boolean
   created_at?: boolean
+  expertise?: boolean
+  bio?: boolean
+  profile_image_url?: boolean
+  pricing_cents?: boolean
+  timezone?: boolean
 }
 
-export type profilesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "role" | "tasks" | "created_at", ExtArgs["result"]["profiles"]>
+export type profilesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "role" | "tasks" | "created_at" | "expertise" | "bio" | "profile_image_url" | "pricing_cents" | "timezone", ExtArgs["result"]["profiles"]>
 export type profilesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookings?: boolean | Prisma.profiles$bookingsArgs<ExtArgs>
   task_activities?: boolean | Prisma.profiles$task_activitiesArgs<ExtArgs>
   mentorSessions?: boolean | Prisma.profiles$mentorSessionsArgs<ExtArgs>
   studentSessions?: boolean | Prisma.profiles$studentSessionsArgs<ExtArgs>
+  availabilitySlots?: boolean | Prisma.profiles$availabilitySlotsArgs<ExtArgs>
   _count?: boolean | Prisma.ProfilesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type profilesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -829,6 +1217,7 @@ export type $profilesPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     task_activities: Prisma.$task_activitiesPayload<ExtArgs>[]
     mentorSessions: Prisma.$SessionPayload<ExtArgs>[]
     studentSessions: Prisma.$SessionPayload<ExtArgs>[]
+    availabilitySlots: Prisma.$MentorAvailabilityPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -838,6 +1227,11 @@ export type $profilesPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     role: $Enums.Role
     tasks: runtime.JsonValue
     created_at: Date
+    expertise: runtime.JsonValue
+    bio: string | null
+    profile_image_url: string | null
+    pricing_cents: number | null
+    timezone: string | null
   }, ExtArgs["result"]["profiles"]>
   composites: {}
 }
@@ -1236,6 +1630,7 @@ export interface Prisma__profilesClient<T, Null = never, ExtArgs extends runtime
   task_activities<T extends Prisma.profiles$task_activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$task_activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$task_activitiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   mentorSessions<T extends Prisma.profiles$mentorSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$mentorSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   studentSessions<T extends Prisma.profiles$studentSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$studentSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  availabilitySlots<T extends Prisma.profiles$availabilitySlotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$availabilitySlotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MentorAvailabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1272,6 +1667,11 @@ export interface profilesFieldRefs {
   readonly role: Prisma.FieldRef<"profiles", 'Role'>
   readonly tasks: Prisma.FieldRef<"profiles", 'Json'>
   readonly created_at: Prisma.FieldRef<"profiles", 'DateTime'>
+  readonly expertise: Prisma.FieldRef<"profiles", 'Json'>
+  readonly bio: Prisma.FieldRef<"profiles", 'String'>
+  readonly profile_image_url: Prisma.FieldRef<"profiles", 'String'>
+  readonly pricing_cents: Prisma.FieldRef<"profiles", 'Int'>
+  readonly timezone: Prisma.FieldRef<"profiles", 'String'>
 }
     
 
@@ -1758,6 +2158,30 @@ export type profiles$studentSessionsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
+}
+
+/**
+ * profiles.availabilitySlots
+ */
+export type profiles$availabilitySlotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MentorAvailability
+   */
+  select?: Prisma.MentorAvailabilitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MentorAvailability
+   */
+  omit?: Prisma.MentorAvailabilityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MentorAvailabilityInclude<ExtArgs> | null
+  where?: Prisma.MentorAvailabilityWhereInput
+  orderBy?: Prisma.MentorAvailabilityOrderByWithRelationInput | Prisma.MentorAvailabilityOrderByWithRelationInput[]
+  cursor?: Prisma.MentorAvailabilityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MentorAvailabilityScalarFieldEnum | Prisma.MentorAvailabilityScalarFieldEnum[]
 }
 
 /**

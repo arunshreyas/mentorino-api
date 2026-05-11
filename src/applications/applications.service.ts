@@ -1,4 +1,4 @@
-import { Injectable, ForbiddenException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateApplicationDto } from './dto/create-application.dto';
 import { UpdateApplicationDto } from './dto/update-application.dto';
 import { PrismaService } from '../prisma.service';
@@ -55,11 +55,11 @@ export class ApplicationsService {
     });
 
     if (!application) {
-      throw new ForbiddenException('Application not found');
+      throw new NotFoundException('Application not found');
     }
 
     // Check authorization
-    if (user.role !== 'admin' && user.role !== 'mentor') {
+    if (user.role !== 'ADMIN' && user.role !== 'MENTOR') {
       // Users can only see their own applications
       if (application.user_email !== user.email) {
         throw new ForbiddenException('Access denied');
@@ -77,7 +77,7 @@ export class ApplicationsService {
   }
 
   accept(id: string) {
-    return this.update(id, { status: 'accepted' });
+    return this.updateStatus(id, 'approved');
   }
 
   reject(id: string) {
@@ -91,6 +91,8 @@ export class ApplicationsService {
   }
 
   findByStatus(status: string) {
+    this.assertValidStatus(status);
+
     return this.prisma.applications.findMany({
       where: { status },
       orderBy: { created_at: 'desc' },
@@ -98,9 +100,17 @@ export class ApplicationsService {
   }
 
   updateStatus(id: string, status: string) {
+    this.assertValidStatus(status);
+
     return this.prisma.applications.update({
       where: { id },
       data: { status },
     });
+  }
+
+  private assertValidStatus(status: string) {
+    if (!['pending', 'approved', 'rejected'].includes(status)) {
+      throw new BadRequestException('Application status must be pending, approved, or rejected');
+    }
   }
 }
